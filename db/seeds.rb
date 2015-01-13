@@ -5,3 +5,4 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+action_types = ActionType.create([{ action: 'Deploy', impact: -1}, {action: 'Receive', impact: 1}, {action: 'Transfer', impact: 1}])
