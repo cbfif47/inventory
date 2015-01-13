@@ -34,6 +34,7 @@ end
     
   def index
       @transactions = Transaction.all
+      @locations = Location.all
 
   end
 

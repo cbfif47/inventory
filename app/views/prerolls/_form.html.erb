@@ -4,7 +4,7 @@
     <%= f.label "Date" %>
     <%= f.date_select(:date) %>
     <%= f.label "Action" %>
-    <%= f.collection_select(:action_type_id, ActionType.all, :id, :action) %>
+    <%= f.collection_select(:action_id, Action.all, :id, :action) %>
     <%= f.label "Location1" %>
     <%= f.collection_select(:loc1, Location.all, :id, :name) %>
     <%= f.label "Location2" %>
