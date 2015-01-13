@@ -1,0 +1,29 @@
+<h1>All Transactions</h1>
+ 
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Date</th>
+    <th>Item</th>
+    <th>Action</th>
+    <th>Quantity</th>
+    <th>Loc1</th>
+    <th>Loc2</th>
+  </tr>
+ 
+  <% @transactions.each do |transaction| %>
+    <tr>
+      <td><%= transaction.id %></td>
+      <td><%= transaction.date %></td>
+      <td><%= transaction.item.name %></td>
+      <td><%= transaction.action.action %></td>
+      <td><%= transaction.quantity %></td>
+      <td><%= transaction.loc1 %></td>
+      <td><%= transaction.loc2 %></td>
+      <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
+      <td><%= link_to 'Destroy', transaction_path(transaction), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+    </tr>
+  <% end %>
+</table>
+<%= link_to 'Add New Transaction', new_transaction_path %>
+<%= link_to 'Back Home', root_path %>

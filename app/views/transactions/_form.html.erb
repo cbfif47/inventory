@@ -1,0 +1,32 @@
+<%= form_for @transaction do |f| %>
+  <% if @transaction.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@transaction.errors.count, "error") %> prohibited
+      this transaction from being saved:</h2>
+    <ul>
+    <% @transaction.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+  <p>
+    <%= f.label :date %>
+    <%= f.date_field :date %><br>
+    <%= f.label :item_id %>
+    <%= f.collection_select(:item_id, Item.all, :id, :name_with_sub) %><br>
+    <%= f.label :action_type_id %>
+    <%= f.collection_select(:action_id, Action.all, :id, :action) %><br>
+    <%= f.label :quantity %>
+    <%= f.number_field :quantity %><br>
+    <%= f.label :loc1 %>
+    <%= f.collection_select(:loc1, Location.all, :id, :name) %><br>
+    <%= f.label :loc2 %>
+    <%= f.collection_select(:loc2, Location.all, :id, :name) %><br>
+  </p>
+
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
