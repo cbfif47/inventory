@@ -5,4 +5,4 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-action_types = ActionType.create([{ action: 'Deploy', impact: -1}, {action: 'Receive', impact: 1}, {action: 'Transfer', impact: 1}])
+preroll = Preroll.create(date: 1/13/15, action_type_id: 1, loc1: 1, loc2:1)

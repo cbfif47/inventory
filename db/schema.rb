@@ -11,11 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150112234605) do
+ActiveRecord::Schema.define(version: 20150113171457) do
 
   create_table "action_types", force: true do |t|
     t.string   "action"
     t.integer  "impact"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "items", force: true do |t|
+    t.string   "name"
+    t.string   "sub"
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,5 +35,16 @@ ActiveRecord::Schema.define(version: 20150112234605) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "prerolls", force: true do |t|
+    t.date     "date"
+    t.integer  "action_type_id"
+    t.integer  "loc1"
+    t.integer  "loc2"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "prerolls", ["action_type_id"], name: "index_prerolls_on_action_type_id"
 
 end
