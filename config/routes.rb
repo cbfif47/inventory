@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'reports/index'
+
   get 'welcome/index'
  root 'welcome#index'
   get 'locations/new'

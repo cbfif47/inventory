@@ -6,9 +6,9 @@
     <th>Date</th>
     <th>Item</th>
     <th>Action</th>
-    <th>Change</th>
-    <th>Loc1</th>
-    <th>Loc2</th>
+    <th>Quantity</th>
+    <th>From</th>
+    <th>To</th>
   </tr>
  
   <% @transactions.each do |transaction| %>
@@ -17,7 +17,7 @@
       <td><%= transaction.date %></td>
       <td><%= transaction.item.name %></td>
       <td><%= transaction.action.action %></td>
-      <td><%= transaction.net %></td>
+      <td><%= transaction.quantity %></td>
       <td><%= @locations.find(transaction.loc1).name %></td>
       <td><%= @locations.find(transaction.loc2).name %></td>
       <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
@@ -32,13 +32,10 @@
   
   <p>   
     <%= f.label "Date" %>
-    <%= f.date_select(:date) %>
+    <%= f.date_select(:date, use_short_month: true,start_year: Date.today.year - 2, end_year: Date.today.year+1, selected: Date.today) %>
     <%= f.label "Action" %>
     <%= f.collection_select(:action_id, Action.all, :id, :action) %>
-    <%= f.label "Location1" %>
-    <%= f.collection_select(:loc1, Location.all, :id, :name) %>
-    <%= f.label "Location2" %>
-    <%= f.collection_select(:loc2, Location.all, :id, :name) %><br>
+<br>
 <br>
   </p>
  
