@@ -1,7 +1,10 @@
 class TransactionsController < ApplicationController
-  def new
+
+    
+def new
       @transaction = Transaction.new
-  end
+      @preroll = Preroll.find_by id: 1
+end
 
 def create
         @transaction = Transaction.new(transaction_params)
@@ -35,7 +38,7 @@ end
   def index
       @transactions = Transaction.all
       @locations = Location.all
-
+      @preroll = Preroll.find_by id: 1
   end
 
 
