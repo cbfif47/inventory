@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'reports/index'
-
   get 'welcome/index'
  root 'welcome#index'
   get 'locations/new'
@@ -16,7 +14,9 @@ Rails.application.routes.draw do
     resources :prerolls
     resources :items
     resources :transactions
-    resources :reports
+    get 'reports/index', :as => :reports
+    get 'reports/summary' => 'reports#summary', :as => :summary_report
+    get 'reports/by_sub' => 'reports#by_sub', :as => :by_sub_report
  
 
   # The priority is based upon order of creation: first created -> highest priority.

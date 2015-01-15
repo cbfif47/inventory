@@ -1,0 +1,21 @@
+<h1>Summary Report</h1>
+
+<table>
+  <tr>
+    <th>Item</th>
+    <% @locations.each do |location| %>
+    <th><%= location.name %></th>
+    <% end %>
+  </tr>
+ 
+  <% @items.each do |item| %>
+    <tr>
+      <td><%= item.name_with_sub %></td>
+    	<% @locations.each do |location| %>
+        	<td><%= Transaction.where(:item_id => item, :loc2 => location.id).sum(:quantity) - Transaction.where(:item_id => item, :loc1 => location.id).sum(:quantity) %></td>
+	<% end %>
+    </tr>
+  <% end %>
+</table>
+<%= link_to 'Add New Location', new_location_path %>
+<%= link_to 'Back Home', root_path %>

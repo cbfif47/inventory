@@ -15,7 +15,7 @@
     <tr>
       <td><%= transaction.id %></td>
       <td><%= transaction.date %></td>
-      <td><%= transaction.item_id ? transaction.item.name : "" %></td>
+      <td><%= transaction.item_id ? transaction.item.name_with_sub : "" %></td>
       <td><%= transaction.action_id ? transaction.action.action : "" %></td>
       <td><%= transaction.quantity %></td>
       <td><%= transaction.loc1 ? @locations.find(transaction.loc1).name : "" %></td>
