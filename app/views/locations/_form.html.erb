@@ -11,9 +11,10 @@
   </div>
   <% end %>
   <p>
+    <%= f.number_field :id %><br>
     <%= f.label :name %><br>
     <%= f.text_field :name %><br>
-    <%= f.label "Available" %>
+    <%= f.label "Primary" %>
     <%= f.check_box :available %>
     <%= f.label :active %>
     <%= f.check_box :active %>

@@ -15,18 +15,17 @@
     <tr>
       <td><%= transaction.id %></td>
       <td><%= transaction.date %></td>
-      <td><%= transaction.item.name %></td>
-      <td><%= transaction.action.action %></td>
+      <td><%= transaction.item_id ? transaction.item.name : "" %></td>
+      <td><%= transaction.action_id ? transaction.action.action : "" %></td>
       <td><%= transaction.quantity %></td>
-      <td><%= @locations.find(transaction.loc1).name %></td>
-      <td><%= @locations.find(transaction.loc2).name %></td>
+      <td><%= transaction.loc1 ? @locations.find(transaction.loc1).name : "" %></td>
+      <td><%= transaction.loc2 ?  @locations.find(transaction.loc2).name : "" %></td>
       <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
       <td><%= link_to 'Destroy', transaction_path(transaction), method: :delete, data: {confirm: 'Are you sure?'} %></td>
     </tr>
   <% end %>
 </table>
-<%= link_to 'Add New Transaction', new_transaction_path %>
-<%= link_to 'Back Home', root_path %>
+<br>
 
 <%= form_for @preroll do |f| %>
   
@@ -35,11 +34,9 @@
     <%= f.date_select(:date, use_short_month: true,start_year: Date.today.year - 2, end_year: Date.today.year+1, selected: Date.today) %>
     <%= f.label "Action" %>
     <%= f.collection_select(:action_id, Action.all, :id, :action) %>
-<br>
-<br>
+    <%= f.submit "Let's do it!" %>
   </p>
- 
-  <p>
-    <%= f.submit %>
-  </p>
+
 <% end %>
+<%= link_to 'Back Home', root_path %>
+<%= link_to 'Edit All', edit_all_path() %>

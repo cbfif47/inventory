@@ -13,22 +13,18 @@
 
   <p>
     <%= f.label :date %>
-    <%= f.date_field :date, :value => @preroll.date %><br>
+    <%= f.date_field :date %><br>
     <%= f.label :item_id %>
     <%= f.collection_select(:item_id, Item.all, :id, :name_with_sub) %><br>
-
-    <%= f.label :action_type_id %>
-    <%= f.collection_select(:action_id, Action.all, :id, :action, {:selected => @preroll.action_id}) %><br>
+    <%= f.label :action_id %>
+    <%= f.collection_select(:action_id, Action.all, :id, :action) %><br>
     <%= f.label :quantity %>
     <%= f.number_field :quantity %><br>
-    <%= f.label :loc1 %>
-    <%= f.collection_select(:loc1, Location.all, :id, :name, {:selected => @preroll.loc1}) %><br>
-    <% if @preroll.action_id == 3 %>
-    <%= f.label :loc2 %>
-    <%= f.collection_select(:loc2, Location.all, :id, :name, {:selected => @preroll.loc2}) %><br>
-    <% else %>
-    <%= f.hidden_field :loc2, :value => 1 %>
-    <% end %>
+    <%= f.label 'From' %>
+    <%= f.collection_select(:loc1, Location.all, :id, :name) %><br>
+    <%= f.label 'To' %>
+    <%= f.collection_select(:loc2, Location.all, :id, :name) %><br>
+
   </p>
 
  

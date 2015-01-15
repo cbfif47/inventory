@@ -5,8 +5,14 @@ class LocationsController < ApplicationController
 
 def create
         @location = Location.new(location_params)
-        
         if @location.save
+                @others = Location.where("id != ?", @location.id)
+            if @location.available == true
+                @others.each do |other|
+                    other.update(:available => false)
+                end
+                else
+            end
             redirect_to action: 'index'
         else
             render 'new'
@@ -23,10 +29,16 @@ end
     
     def update
         @location = Location.find(params[:id])
-        
+        @others = Location.where("id != ?", params[:id])
         
         if @location.update(location_params)
-            redirect_to action: 'index'
+            if @location.available == true
+                @others.each do |other|
+                    other.update(:available => false)
+                end
+                else
+            end
+                redirect_to action: 'index'
                     else
             render 'edit'
         end
@@ -42,7 +54,7 @@ end
     
     private
     def location_params
-        params.require(:location).permit(:name,:on_tour,:active)
+        params.require(:location).permit(:name,:available,:active)
     end
     
 end

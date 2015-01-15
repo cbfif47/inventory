@@ -8,10 +8,16 @@ Rails.application.routes.draw do
   get 'locations/index'
 
   get 'locations/edit'
+    get 'transactions/all/edit' => 'transactions#edit_all', :as => :edit_all
+    put 'transactions/all' => 'transactions#update_all', :as => :update_all
+    get 'transactions/batch/new' => 'transactions#new_batch', :as => :new_batch
+    put 'transactions/batch' => 'transactions#create_batch', :as => :create_batch  
     resources :locations
     resources :prerolls
     resources :items
     resources :transactions
+    resources :reports
+ 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
