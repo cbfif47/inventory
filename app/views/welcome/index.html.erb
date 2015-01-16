@@ -2,16 +2,9 @@
 <%= form_for @preroll do |f| %>
   
   <p>   
-    <%= f.label "Date" %>
-    <%= f.date_select(:date, use_short_month: true,start_year: Date.today.year - 2, end_year: Date.today.year+1, selected: Date.today) %>
-    <%= f.label "Action" %>
+    <%= f.date_field(:date, value: Date.today) %>
     <%= f.collection_select(:action_id, Action.all, :id, :action) %>
     <%= f.submit "Let's do it!" %>
   </p>
 
 <% end %>
-<%= link_to 'Items', items_path %>
-<%= link_to 'Locations', locations_path %>
-<%= link_to 'Transactions', transactions_path %>
-<%= link_to 'Reports', reports_path %>
-

@@ -11,12 +11,16 @@
   </div>
   <% end %>
   <p>
-    <%= f.label :name %><br>
-    <%= f.text_field :name %><br>
-    <%= f.label "Sub" %>
-    <%= f.text_field :sub %>
-    <%= f.label :active %>
-    <%= f.check_box :active %>
+<table>
+<tr>
+    <td><%= f.label :name %></td>
+    <td><%= f.text_field :name %></td></tr>
+    <tr><td><%= f.label "Sub" %></td>
+    <td><%= f.text_field :sub %></td></tr>
+    <tr><td><%= f.label :active %></td>
+    <td><%= f.check_box :active %></td></tr>
+
+</table>
   </p>
 
  

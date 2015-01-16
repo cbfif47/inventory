@@ -4,6 +4,8 @@ class TransactionsController < ApplicationController
 def new
       @transaction = Transaction.new
       @preroll = Preroll.find_by id: 1
+      @locations = Location.where(:active => true)
+      @items = Item.where(:active => true)
 end
 
 def create
