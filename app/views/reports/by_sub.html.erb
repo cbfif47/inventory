@@ -6,14 +6,18 @@
     <% @locations.each do |location| %>
     <th><%= location.name %></th>
     <% end %>
+   <th>Avg Deployment</th>
+   <th>Till Gone</th>
   </tr>
  
   <% @subs.each do |sub| %>
     <tr>
       <td><%= sub %></td>
     	<% @locations.each do |location| %>
-        	<td><%= Transaction.joins(:item).where('items.sub' => sub, 'transactions.loc2' => location).sum(:quantity) - Transaction.joins(:item).where('items.sub' => sub, 'transactions.loc1' => location).sum(:quantity)%></td>
+        	<td><%= Transaction.subrpt(sub,:loc2, location) - Transaction.subrpt(sub,:loc1, location)%></td>
 	<% end %>
+        <td><%= Transaction.avgsub(sub) %></td>
+        <td><%= Transaction.gonesub(sub) %></td>
     </tr>
   <% end %>
 </table>
