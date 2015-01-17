@@ -29,8 +29,8 @@ class Transaction < ActiveRecord::Base
     end
     
     def self.avgsub(sub)
-        if joins(:item).where('items.sub' => sub).count > 0
-        joins(:item).where('items.sub' => sub).average(:quantity)
+      if joins(:item).where('items.sub' => sub, :action_id => 1).count > 0
+        joins(:item).where('items.sub' => sub, :action_id =>1).average(:quantity)
         else
             return 0
         end
@@ -40,7 +40,7 @@ class Transaction < ActiveRecord::Base
         if self.avgitem(item) == 0
             return 0
         else
-        ((self.sumrpt(item, :loc2, @primary) - self.sumrpt(item, :loc1, @primary))/self.avgitem(item)).round(2)
+        (self.sumrpt(item, :loc2, @primary) - self.sumrpt(item, :loc1, @primary))/self.avgitem(item).round(2)
         end
     end
     

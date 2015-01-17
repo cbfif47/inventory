@@ -11,50 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150115234358) do
+ActiveRecord::Schema.define(version: 20150117072613) do
 
   create_table "actions", force: true do |t|
     t.string   "action"
     t.integer  "impact"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "batches", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "items", force: true do |t|
     t.string   "name"
     t.string   "sub"
     t.boolean  "active"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "locations", force: true do |t|
     t.string   "name"
     t.boolean  "available"
     t.boolean  "active"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
-
-  create_table "locations_transactions", id: false, force: true do |t|
-    t.integer "location_id"
-    t.integer "transaction_id"
-  end
-
-  add_index "locations_transactions", ["location_id", "transaction_id"], name: "index_locations_transactions_on_location_id_and_transaction_id"
 
   create_table "prerolls", force: true do |t|
     t.date     "date"
     t.integer  "action_id"
     t.integer  "loc1"
     t.integer  "loc2"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "prerolls", ["action_id"], name: "index_prerolls_on_action_id"
@@ -66,9 +54,8 @@ ActiveRecord::Schema.define(version: 20150115234358) do
     t.integer  "quantity"
     t.integer  "loc1"
     t.integer  "loc2"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "batch_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "transactions", ["action_id"], name: "index_transactions_on_action_id"
