@@ -1,0 +1,8 @@
+<h1>New Transaction</h1>
+    <% if @preroll.action_id == 1 %>
+	<%= render 'deployform' %>
+    <% elsif @preroll.action_id == 2 %>
+	<%= render 'receiveform' %>
+    <% else %>
+	<%= render 'transferform' %>
+    <% end %>

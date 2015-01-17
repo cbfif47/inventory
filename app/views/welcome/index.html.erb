@@ -1,0 +1,10 @@
+<h1>Welcome to the Inventory Database!</h1>
+<%= form_for @preroll do |f| %>
+  
+  <p>   
+    <%= f.date_field(:date, value: Date.today) %>
+    <%= f.collection_select(:action_id, Action.all, :id, :action) %>
+    <%= f.submit "Let's do it!" %>
+  </p>
+
+<% end %>

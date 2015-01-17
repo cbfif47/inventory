@@ -1,0 +1,22 @@
+<h1>All Items</h1>
+ 
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Sub</th>
+    <th>Active Y/N</th>
+  </tr>
+ 
+  <% @items.each do |item| %>
+    <tr>
+      <td><%= item.id %></td>
+      <td><%= item.name %></td>
+      <td><%= item.sub %></td>
+      <td><%= item.active %></td>
+      <td><%= link_to 'Edit', edit_item_path(item) %></td>
+
+    </tr>
+  <% end %>
+</table>
+<%= link_to 'Add New Item', new_item_path %>

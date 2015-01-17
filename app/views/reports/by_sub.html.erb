@@ -1,0 +1,23 @@
+<h1>Sub Report</h1>
+
+<table>
+  <tr>
+    <th>Sub</th>
+    <% @locations.each do |location| %>
+    <th><%= location.name %></th>
+    <% end %>
+   <th>Avg Deployment</th>
+   <th>Till Gone</th>
+  </tr>
+ 
+  <% @subs.each do |sub| %>
+    <tr>
+      <td><%= sub %></td>
+    	<% @locations.each do |location| %>
+        	<td><%= Transaction.subrpt(sub,:loc2, location) - Transaction.subrpt(sub,:loc1, location)%></td>
+	<% end %>
+        <td><%= Transaction.avgsub(sub) %></td>
+        <td><%= Transaction.gonesub(sub) %></td>
+    </tr>
+  <% end %>
+</table>
