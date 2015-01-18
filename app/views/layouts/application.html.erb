@@ -9,13 +9,14 @@
 <body>
 
 
-<p class="navbar-text pull-right">
-<%= link_to 'Home', root_path %>
-<%= link_to 'Items', items_path %>
-<%= link_to 'Locations', locations_path %>
-<%= link_to 'Transactions', transactions_path %>
-<%= link_to 'Reports', reports_path %>
-<% if notice %>
+<ul>
+  <li><%= link_to 'Home', root_path, :class => 'nav' %></li>
+  <li><%= link_to 'Items', items_path, :class => 'nav' %></li>
+  <li><%= link_to 'Locations', locations_path, :class => 'nav' %></li>
+  <li><%= link_to 'Trans', transactions_path, :class => 'nav' %></li>
+  <li><%= link_to 'Rprts', reports_path, :class => 'nav' %></li>
+</ul>
+  <% if notice %>
   <p class="alert alert-success"><%= notice %></p>
 <% end %>
 <% if alert %>
@@ -25,12 +26,12 @@
 
 <p><% if user_signed_in? %>
   Logged in as <strong><%= current_user.email %></strong>.
-  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+  <ul><li><%= link_to 'Edit profile', edit_user_registration_path, :class => 'nav' %></li>
+  <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'nav'  %></li>
 <% else %>
-  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-<% end %></p>
+  <li><%= link_to "Sign up", new_user_registration_path, :class => 'nav'  %></li>
+  <li><%= link_to "Login", new_user_session_path, :class => 'nav'  %></li>
+    <% end %></ul></p>
 
 </body>
 </html>

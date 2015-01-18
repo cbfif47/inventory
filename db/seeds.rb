@@ -7,4 +7,4 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 preroll = Preroll.create( date: Date.today, action_id: 1, loc1: 1, loc2:1)
 blankloc = Location.create(name: "", available: false, active: false)
-actions = Action.create([{action: 'Deploy', impact: -1}, {action: 'Receive', impact: 1}, {action: 'Transfer', impact: 0}])
+actions = Action.create([{action: 'Deploy', impact: -1}, {action: 'Receive', impact: 1}, {action: 'Transfer', impact: 0}, {action: 'Adjustment', impact:0}])

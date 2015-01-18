@@ -66,7 +66,7 @@ end
   def  new_batch
     @preroll = Preroll.find_by id: 1
     @location = Location.where("available = ?", true).first
-    @items = Item.all         
+    @items = Item.where(:active => true)       
   end
   
     

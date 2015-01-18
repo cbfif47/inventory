@@ -11,15 +11,12 @@
   </div>
   <% end %>
   <p>
-<table>
-<tr>
-    <td><%= f.label :name %></td>
-    <td><%= f.text_field :name %></td></tr>
-    <tr><td><%= f.label "Primary" %></td>
-    <td><%= f.check_box :available %></td></tr>
-    <tr><td><%= f.label :active %></td>
-      <td><%= f.check_box :active, checked:true %></td></tr>
-</table>
+    <%= f.text_field :name, :placeholder => 'Location Name' %><br>
+<%= f.label "Primary" %>
+<%= f.check_box :available %>
+<%= f.label :active %>
+<%= f.check_box :active, checked:true %>
+
   </p>
 
  

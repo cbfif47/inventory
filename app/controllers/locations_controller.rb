@@ -45,7 +45,7 @@ end
     end
     
   def index
-      @locations = Location.all
+    @locations = Location.where("id != ?", 1)
   end
 
 

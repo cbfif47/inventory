@@ -4,16 +4,16 @@
   <tr>
     <th>ID</th>
     <th>Location</th>
-    <th>Primary Y/N</th>
-    <th>Active Y/N</th>
+    <th>Primary</th>
+    <th>Active</th>
   </tr>
  
   <% @locations.each do |location| %>
     <tr>
       <td><%= location.id %></td>
       <td><%= location.name %></td>
-      <td><%= location.available %></td>
-      <td><%= location.active %></td>
+      <td><%= radio_button_tag 'primary', '1', location.available, :disabled => true %></td>
+      <td><%= check_box_tag 'active', '1', location.active, :disabled => true %></td>
       <td><%= link_to 'Edit', edit_location_path(location) %></td>
     <!--  <td><%= link_to 'Destroy', location_path(location), method: :delete, data: {confirm: 'Are you sure?'} %></td>    dont wanna destroy--!> 
     </tr>

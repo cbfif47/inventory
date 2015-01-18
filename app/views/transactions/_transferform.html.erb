@@ -15,13 +15,13 @@
     <%= f.label :date %>
     <%= f.date_field :date, :value => @preroll.date %><br>
     <%= f.label :item_id %>
-    <%= f.collection_select(:item_id, Item.all, :id, :name_with_sub) %><br>
+    <%= f.collection_select(:item_id, @items, :id, :name_with_sub) %><br>
     <%= f.label :quantity %>
     <%= f.number_field :quantity %><br>
     <%= f.label 'Transfer From' %>
-    <%= f.collection_select(:loc1, Location.all, :id, :name, {:selected => @preroll.loc1}) %><br>
+    <%= f.collection_select(:loc1, @locations, :id, :name, {:selected => @preroll.loc1}) %><br>
     <%= f.label 'Transfer To' %>
-    <%= f.collection_select(:loc2, Location.all, :id, :name, {:selected => @preroll.loc2}) %><br>
+    <%= f.collection_select(:loc2, @locations, :id, :name, {:selected => @preroll.loc2}) %><br>
     <%= f.hidden_field :action_id, :value => 3 %>
   </p>
 
