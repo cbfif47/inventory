@@ -8,7 +8,7 @@ class PrerollsController < ApplicationController
       
       if @preroll.update(preroll_params)
           if @preroll.action_id == 1
-              redirect_to new_batch_path
+              redirect_to new_transaction_path
               else
               redirect_to new_transaction_path
           end

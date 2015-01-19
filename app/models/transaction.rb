@@ -10,14 +10,14 @@ class Transaction < ActiveRecord::Base
         0
         end
     end
-    
-    def self.sumrpt(item, locno, location)
-        where(:item_id => item, locno => location.id).sum(:quantity)
+  
+    def self.remain(item, location)
+        self.where(:item_id => item, :loc2 => location).sum(:quantity) - self.where(:item_id => item, :loc1 => location).sum(:quantity)
             
     end
     
-    def self.subrpt(sub, locno, location)
-        joins(:item).where('items.sub' => sub, transactions:{ locno => location.id}).sum(:quantity)
+    def self.subrpt(sub, location)
+      self.joins(:item).where('items.sub' => sub, transactions:{ :loc2 => location.id}).sum(:quantity) - self.joins(:item).where('items.sub' => sub, transactions:{ :loc1 => location.id}).sum(:quantity)
     end
     
     def self.avgitem(item)
@@ -40,7 +40,7 @@ class Transaction < ActiveRecord::Base
         if self.avgitem(item) == 0
             return 0
         else
-        (self.sumrpt(item, :loc2, @primary) - self.sumrpt(item, :loc1, @primary))/self.avgitem(item).round(2)
+          (self.remain(item, @primary) / self.avgitem(item)).round(2)
         end
     end
     
@@ -48,7 +48,7 @@ class Transaction < ActiveRecord::Base
         if self.avgsub(sub) == 0
             return 0
         else
-        ((self.subrpt(sub, :loc2, @primary) - self.subrpt(sub, :loc1, @primary))/self.avgsub(sub)).round(2)
+        (self.subrpt(sub, @primary) / self.avgsub(sub)).round(2)
         end
     end
     

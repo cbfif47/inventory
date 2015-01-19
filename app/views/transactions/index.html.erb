@@ -34,6 +34,7 @@
   <p>   
     <%= f.date_field(:date, value: Date.today) %>
     <%= f.collection_select(:action_id, Action.all, :id, :action) %>
+    <%= f.collection_select(:loc1, Location.where(active: true), :id, :name) %>
     <%= f.submit "Let's do it!" %>
   </p>
 

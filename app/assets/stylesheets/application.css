@@ -61,6 +61,10 @@ tr:nth-of-type(odd) {
   background-color:#ccc;
 }
 
+tr.form:nth-of-type(odd) {
+  background-color:#E8F6FF;
+}
+
 
 th {
   background-color: black;

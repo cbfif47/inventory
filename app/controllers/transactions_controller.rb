@@ -4,20 +4,44 @@ class TransactionsController < ApplicationController
 def new
       @transaction = Transaction.new
       @preroll = Preroll.find_by id: 1
-      @locations = Location.where(:active => true)
-      @items = Item.where(:active => true)
+      @items = Item.where('active = ?', true)
+      @locations = Location.where("active = ? AND id != ?",true, @preroll.loc1)
+
+
 end
 
-def create
-        @transaction = Transaction.new(transaction_params)
-        
-        if @transaction.save
-            redirect_to action: 'index'
+# def create
+#        @transaction = Transaction.new(transaction_params)
+#        
+#        if @transaction.save
+#            redirect_to action: 'index'
+#        else
+#            render 'new'
+#        end
+#end
+
+  def create
+    @preroll = Preroll.find_by id: 1
+    params['transaction'].each do |k,v|
+        if k['quantity'] != ''
+          if @preroll.action_id == 4 #adjustment logic
+            if k['quantity'].to_i > k['oldquant'].to_i
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['quantity'].to_i-k['oldquant'].to_i), :loc1 => 1, :loc2 => k['loc1'])
+              @transaction.save
+            else
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :loc2 => 1)
+              @transaction.save
+            end
+          else
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => k['quantity'], :loc1 => k['loc1'], :loc2 => k['loc2'])
+              @transaction.save
+          end
         else
-            render 'new'
         end
-end
-
+    end    
+    redirect_to action: 'index'
+end 
+  
 def show
     @transaction = Transaction.find(params[:id])
 end
@@ -70,17 +94,7 @@ end
   end
   
     
-  def create_batch
-    @preroll = Preroll.find_by id: 1
-    params['transaction'].each do |k,v|
-        if k['quantity'] != ''
-            @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => k['quantity'], :loc1 => k['loc1'], :loc2 => k['loc2'])
-            @transaction.save
-        else
-        end
-    end    
-    redirect_to action: 'index'
-  end    
+   
     
 private
     def transaction_params

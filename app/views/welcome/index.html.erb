@@ -1,10 +1,11 @@
-<h1>Welcome to the Inventory Database!</h1>
+<h1>Welcome to MrchGrl</h1>
 <%= form_for @preroll do |f| %>
   
   <p>   
     <%= f.date_field(:date, value: Date.today) %>
     <%= f.collection_select(:action_id, Action.all, :id, :action) %>
-    <%= f.submit "Let's do it!" %>
+    <%= f.collection_select(:loc1, @locations, :id, :name) %>
+    <%= f.submit "Lez do it" %>
   </p>
 
 <% end %>

@@ -6,15 +6,15 @@
     <% @locations.each do |location| %>
     <th><%= location.name %></th>
     <% end %>
-   <th>Avg Deployment</th>
-   <th>Till Gone</th>
+   <th>Avg Sales</th>
+   <th>Til Gone</th>
   </tr>
  
   <% @subs.each do |sub| %>
-    <tr>
+    <tr >
       <td><%= sub %></td>
     	<% @locations.each do |location| %>
-        	<td><%= Transaction.subrpt(sub,:loc2, location) - Transaction.subrpt(sub,:loc1, location)%></td>
+        	<td><%= Transaction.subrpt(sub,location) %></td>
 	<% end %>
         <td><%= Transaction.avgsub(sub) %></td>
         <td><%= Transaction.gonesub(sub) %></td>

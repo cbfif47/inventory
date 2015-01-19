@@ -1,8 +1,7 @@
 <%= form_for @transaction, :html => { :method => :post } do %>
-<h1>Transfer from <%= Location.find_by(id: @preroll.loc1).name %></h1>
+<h1>Adjust <%= Location.find_by(id: @preroll.loc1).name %></h1>
 <table>
     <tr>
-      <th>Transfer to</th>
       <th>Item</th>
       <th>Quantity</th>
     </tr>
@@ -11,13 +10,13 @@
       <%= fields_for "transaction[]", transaction do |f| %>
     <tr class="form">
       <%= f.hidden_field :date, :value => @preroll.date %>
-      <%= f.hidden_field :action_id, :value => '3' %>
+      <%= f.hidden_field :action_id, :value => 4 %>
       <%= f.hidden_field :loc1, :value => @preroll.loc1 %>
-      <td><%= f.collection_select(:loc2, @locations, :id, :name, {:selected => @preroll.loc1}) %></td>
+      <%= f.hidden_field :loc2, :value => 1 %>
+      <%= f.hidden_field :oldquant, :value => Item.remaining(item, @preroll.loc1) %>
       <td><%= f.collection_select(:item_id, Item.all, :id, :name_with_sub) %></td>
-      <td><%= f.number_field :quantity %></td>
-      <%# Transaction.remain(item, @preroll.loc1) %>
-      <td><%= Item.remaining(item, @preroll.loc1) %></td>
+      <td><%= f.number_field :quantity, :placeholder => Item.remaining(item, @preroll.loc1)%></td>
+      <td><%=  %></td>
     </tr>
       <% end %>
     <% end %>
