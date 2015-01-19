@@ -2,15 +2,14 @@
  
 <table>
   <tr>
-    <th>ID</th>
     <th>Location</th>
     <th>Primary</th>
     <th>Active</th>
+    <th></th>    
   </tr>
  
   <% @locations.each do |location| %>
     <tr>
-      <td><%= location.id %></td>
       <td><%= location.name %></td>
       <td><%= radio_button_tag 'primary', '1', location.available, :disabled => true %></td>
       <td><%= check_box_tag 'active', '1', location.active, :disabled => true %></td>

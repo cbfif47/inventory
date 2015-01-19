@@ -16,7 +16,7 @@
   <% @transactions.each do |transaction| %>
     <tr>
       <td><%= transaction.id %></td>
-      <td><%= transaction.date %></td>
+      <td><%= transaction.date.strftime("%-m/%-d/%y") %></td>
       <td><%= transaction.item_id ? transaction.item.name_with_sub : "" %></td>
       <td><%= transaction.action_id ? transaction.action.action : "" %></td>
       <td><%= transaction.quantity %></td>

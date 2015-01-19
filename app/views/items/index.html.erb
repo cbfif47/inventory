@@ -2,15 +2,14 @@
  
 <table >
   <tr>
-    <th>ID</th>
     <th>Name</th>
-    <th>Sub</th>
+    <th>Size/Media</th>
     <th>Active</th>
+    <th></th>    
   </tr>
  
   <% @items.each do |item| %>
     <tr>
-      <td><%= item.id %></td>
       <td><%= item.name %></td>
       <td><%= item.sub %></td>
       <td><%= check_box_tag 'active', '1', item.active, :disabled => true %></td>

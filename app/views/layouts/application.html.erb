@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>Inventory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>MrchGrl</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -10,10 +10,10 @@
 
 
 <ul>
-  <li><%= link_to 'Home', root_path, :class => 'nav' %></li>
-  <li><%= link_to 'Items', items_path, :class => 'nav' %></li>
-  <li><%= link_to 'Locations', locations_path, :class => 'nav' %></li>
-  <li><%= link_to 'Trans', transactions_path, :class => 'nav' %></li>
+  <li><%= link_to 'MrchGrl', root_path, :class => 'nav' %></li>
+  <li><%= link_to 'Itms', items_path, :class => 'nav' %></li>
+  <li><%= link_to 'Lctns', locations_path, :class => 'nav' %></li>
+  <li><%= link_to 'Trnsctns', transactions_path, :class => 'nav' %></li>
   <li><%= link_to 'Rprts', reports_path, :class => 'nav' %></li>
 </ul>
   <% if notice %>
