@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150117072613) do
+ActiveRecord::Schema.define(version: 20150120033849) do
 
   create_table "actions", force: true do |t|
     t.string   "action"
@@ -20,12 +20,19 @@ ActiveRecord::Schema.define(version: 20150117072613) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "groups", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "items", force: true do |t|
     t.string   "name"
     t.string   "sub"
     t.boolean  "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "group_id"
   end
 
   create_table "locations", force: true do |t|
@@ -34,6 +41,7 @@ ActiveRecord::Schema.define(version: 20150117072613) do
     t.boolean  "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "group_id"
   end
 
   create_table "prerolls", force: true do |t|
@@ -43,6 +51,7 @@ ActiveRecord::Schema.define(version: 20150117072613) do
     t.integer  "loc2"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "group_id"
   end
 
   add_index "prerolls", ["action_id"], name: "index_prerolls_on_action_id"
@@ -56,6 +65,7 @@ ActiveRecord::Schema.define(version: 20150117072613) do
     t.integer  "loc2"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "group_id"
   end
 
   add_index "transactions", ["action_id"], name: "index_transactions_on_action_id"
@@ -74,6 +84,7 @@ ActiveRecord::Schema.define(version: 20150117072613) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "group_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
