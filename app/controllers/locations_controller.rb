@@ -6,12 +6,16 @@ class LocationsController < ApplicationController
 def create
         @location = Location.new(location_params)
         if @location.save
-                @others = Location.where("id != ?", @location.id)
+          @others = Location.where("id != ? AND group_id = ?", @location.id, current_user.group_id)
             if @location.available == true
                 @others.each do |other|
                     other.update(:available => false)
                 end
                 else
+              @primary = Location.where("available = ? AND group_id = ?", true, current_user.group_id)
+              unless @primary.any?
+                @location.update(available: true)
+              end
             end
             redirect_to action: 'index'
         else
@@ -29,7 +33,7 @@ end
     
     def update
         @location = Location.find(params[:id])
-        @others = Location.where("id != ?", params[:id])
+      @others = Location.where("id != ? AND group_id = ?", params[:id], current_user.group_id)
         
         if @location.update(location_params)
             if @location.available == true
@@ -37,6 +41,10 @@ end
                     other.update(:available => false)
                 end
                 else
+                @primary = Location.where("available = ? AND group_id = ?", true, current_user.group_id)
+              unless @primary.any?
+                @location.update(available: true)
+              end
             end
                 redirect_to action: 'index'
                     else
@@ -45,7 +53,7 @@ end
     end
     
   def index
-    @locations = Location.where("id != ?", 1)
+    @locations = Location.where("group_id = ?", current_user.group_id)
   end
 
 
@@ -54,7 +62,7 @@ end
     
     private
     def location_params
-        params.require(:location).permit(:name,:available,:active)
+        params.require(:location).permit(:name,:available,:active,:group_id)
     end
     
 end

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :prerolls
     resources :items
     resources :transactions
+  resources :groups
     get 'reports/index', :as => :reports
     get 'reports' => 'reports#index'
     get 'reports/summary' => 'reports#summary', :as => :summary_report

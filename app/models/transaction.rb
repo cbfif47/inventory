@@ -1,6 +1,7 @@
 class Transaction < ActiveRecord::Base
   belongs_to :item
   belongs_to :action
+  belongs_to :group
     @primary = Location.where(:available => true).first
     
     def net
@@ -12,7 +13,7 @@ class Transaction < ActiveRecord::Base
     end
   
     def self.remain(item, location)
-        self.where(:item_id => item, :loc2 => location).sum(:quantity) - self.where(:item_id => item, :loc1 => location).sum(:quantity)
+      self.where(:item_id => item, :loc2 => location).sum(:quantity) - self.where(:item_id => item, :loc1 => location).sum(:quantity)
             
     end
     

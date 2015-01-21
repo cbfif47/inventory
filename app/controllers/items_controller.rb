@@ -33,7 +33,7 @@ end
     end
     
   def index
-    @items = Item.all  
+    @items = Item.where(:group_id => current_user.group_id)  
   end
 
 
@@ -42,7 +42,7 @@ end
     
     private
     def item_params
-        params.require(:item).permit(:name,:sub,:active)
+      params.require(:item).permit(:name,:sub,:active,:group_id)
     end
     
 end

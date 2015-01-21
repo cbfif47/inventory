@@ -13,7 +13,8 @@
       <%= f.hidden_field :action_id, :value => 2 %>
       <%= f.hidden_field :loc1, :value => 1 %>
       <%= f.hidden_field :loc2, :value => @preroll.loc1 %>
-      <td><%= f.collection_select(:item_id, Item.all, :id, :name_with_sub) %></td>
+      <%= f.hidden_field :group_id, :value => current_user.group_id %>
+      <td><%= f.collection_select(:item_id, @items, :id, :name_with_sub) %></td>
       <td><%= f.number_field :quantity %></td>
       <%# Transaction.remain(item, @preroll.loc1) %>
       <td><%= Item.remaining(item, @preroll.loc1) %></td>

@@ -22,6 +22,7 @@
       <td><%= transaction.quantity %></td>
       <td><%= transaction.loc1 ? @locations.find(transaction.loc1).name : "" %></td>
       <td><%= transaction.loc2 ?  @locations.find(transaction.loc2).name : "" %></td>
+      <td><%= transaction.group_id ?  transaction.group.name : "" %></td>
       <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
       <td><%= link_to 'Destroy', transaction_path(transaction), method: :delete, data: {confirm: 'Are you sure?'} %></td>
     </tr>
@@ -29,15 +30,20 @@
 </table>
 <br>
 
+<% if @formlocs.any? && @items.any? %>
 <%= form_for @preroll do |f| %>
   
   <p>   
     <%= f.date_field(:date, value: Date.today) %>
     <%= f.collection_select(:action_id, Action.all, :id, :action) %>
-    <%= f.collection_select(:loc1, Location.where(active: true), :id, :name) %>
-    <%= f.submit "Let's do it!" %>
+    <%= f.collection_select(:loc1, @formlocs, :id, :name) %>
+      <%= f.hidden_field :group_id, :value => current_user.group_id %>
+    <%= f.submit "Lez do it" %>
   </p>
 
+<% end %>
+<% else %>
+Go make some items and locations!
 <% end %>
 <%= link_to 'Back Home', root_path %>
 <%= link_to 'Edit All', edit_all_path() %>

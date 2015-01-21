@@ -9,6 +9,7 @@
     <%= f.collection_select(:loc1, Location.all, :id, :name) %>
     <%= f.label "Location2" %>
     <%= f.collection_select(:loc2, Location.all, :id, :name) %><br>
+    <%= f.hidden_field :group_id, :value => current_user.group_id %>
 <br>
   </p>
  

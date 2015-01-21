@@ -1,5 +1,6 @@
 class Item < ActiveRecord::Base
     has_many :transactions
+    belongs_to :group
     
   def name_with_sub
     "#{name} #{sub}"
