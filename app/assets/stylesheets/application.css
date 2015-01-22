@@ -33,7 +33,7 @@
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 0px;
   box-sizing: border-box;
   text-align: center;}
 .column,
@@ -125,15 +125,17 @@ body {
   font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
   line-height: 1.6;
   font-weight: 400;
-  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Oxygen", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #222; }
 
+td.pos {color: #00CC00}
+td.neg {color: #FF0000}
 
 /* Typography
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 h1, h2, h3, h4, h5, h6 {
-  margin-top: 0;
-  margin-bottom: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   font-weight: 300; }
 h1 { font-size: 4.0rem; line-height: 1.2;  letter-spacing: -.1rem;}
 h2 { font-size: 3.6rem; line-height: 1.25; letter-spacing: -.1rem; }
@@ -174,18 +176,18 @@ input[type="button"] {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: #555;
+  color: #FFF;
   text-align: center;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 38px;
   letter-spacing: .1rem;
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  background-color: transparent;
+  background-color: #5CE68A;
   border-radius: 4px;
-  border: 1px solid #bbb;
+  border: none;
   cursor: pointer;
   box-sizing: border-box; }
 .button:hover,
@@ -227,6 +229,7 @@ input[type="button"].button-primary:focus {
 /* Forms
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 input[type="email"],
+input[type="date"],
 input[type="number"],
 input[type="search"],
 input[type="text"],
@@ -244,6 +247,7 @@ select {
   box-sizing: border-box; }
 /* Removes awkward default styles on some inputs for iOS */
 input[type="email"],
+input[type="date"],
 input[type="number"],
 input[type="search"],
 input[type="text"],
@@ -259,6 +263,7 @@ textarea {
   padding-top: 6px;
   padding-bottom: 6px; }
 input[type="email"]:focus,
+input[type="date"]:focus,
 input[type="number"]:focus,
 input[type="search"]:focus,
 input[type="text"]:focus,

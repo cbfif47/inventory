@@ -6,25 +6,26 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 <div class="container">
+  <% if user_signed_in? %>
   <div class="row">
-    <div class="one column">
+    <div class="two columns">
 
-<%= link_to 'MrchGrl', root_path, :class => 'nav' %> 
-<%= link_to 'Itms', items_path, :class => 'nav' %>  
-<%= link_to 'Lctns', locations_path, :class => 'nav' %> 
-<%= link_to 'Trnsctns', transactions_path, :class => 'nav' %> 
-<%= link_to 'Rprts', reports_path, :class => 'nav' %>
+      <%= link_to 'Home', root_path, :class => 'nav' %> 
+      <%= link_to 'Locations', locations_path, :class => 'nav' %> 
+      <%= link_to 'Items', items_path, :class => 'nav' %>  
+      <%= link_to 'Actions', transactions_path, :class => 'nav' %> 
+      <%= link_to 'Reports', reports_path, :class => 'nav' %>
 </div>
-    <div class="eleven columns">
+    <% else %>
+    <% end %>
+    <div class="ten columns">
   <% if notice %>
   <p class="alert alert-success"><%= notice %></p>
 <% end %>
@@ -32,21 +33,17 @@
   <p class="alert alert-danger"><%= alert %></p>
 <% end %>
 <%= yield %>
-</div>
-  </div>
+<br><br>
         
-<div class="row">
-<div class="twelve columns">
 <% if user_signed_in? %>
-Logged in as <strong><%= current_user.email %></strong>.
+Logged in as <strong><%= current_user.email %></strong>.<br>
 <%= link_to 'Edit profile', edit_user_registration_path, :class => 'nav' %>
 <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'nav'  %>
         <% if current_user.admin? %>
  <%= link_to 'Groups', groups_path, :class => 'nav' %>
     <% end %>
 <% else %>
-<%= link_to "Sign up", new_user_registration_path, :class => 'nav'  %>
-<%= link_to "Login", new_user_session_path, :class => 'nav'  %>
+
     <% end %>
 
   </div>

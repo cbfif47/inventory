@@ -4,6 +4,7 @@ class Transaction < ActiveRecord::Base
   belongs_to :group
     @primary = Location.where(:available => true).first
     
+  
     def net
         if quantity 
             quantity * action.impact 
@@ -12,8 +13,8 @@ class Transaction < ActiveRecord::Base
         end
     end
   
-    def self.remain(item, location)
-      self.where(:item_id => item, :loc2 => location).sum(:quantity) - self.where(:item_id => item, :loc1 => location).sum(:quantity)
+  def self.remain(item, location, min=0, max=self.maximum(:id))
+    self.where("item_id = ? AND loc2 = ? AND id >= ? AND id <= ?", item, location, min, max).sum(:quantity) - self.where("item_id = ? AND loc1 = ? AND id >= ? AND id <= ?", item, location, min, max).sum(:quantity)
             
     end
     

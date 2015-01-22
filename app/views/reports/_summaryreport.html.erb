@@ -1,4 +1,5 @@
-<table>
+<table class="u-full-width">
+  <thead>
   <tr>
     <th>Item</th>
     <% @locations.each do |location| %>
@@ -7,7 +8,8 @@
     <th>Avg Sales</th>
     <th>Til Gone</th>
   </tr>
- 
+  </thead>
+ <tbody>
   <% @items.each do |item| %>
     <tr>
       <td><%= item.name_with_sub %></td>
@@ -18,4 +20,5 @@
         	<td><%= Transaction.goneitem(item) %></td>
     </tr>
   <% end %>
+   </tbody>
 </table>

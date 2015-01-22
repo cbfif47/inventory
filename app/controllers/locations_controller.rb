@@ -62,7 +62,7 @@ end
     
     private
     def location_params
-        params.require(:location).permit(:name,:available,:active,:group_id)
+        params.require(:location).permit(:name,:available,:active).merge(group_id: current_user.group_id)
     end
     
 end

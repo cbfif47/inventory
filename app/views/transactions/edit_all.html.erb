@@ -12,11 +12,11 @@
       <%= fields_for "transaction[]", transaction do |f| %>
     <tr>
       <td><%= f.date_field :date %></td>
-      <td><%= f.collection_select(:item_id, Item.all, :id, :name_with_sub) %></td>
+      <td><%= f.collection_select(:item_id, @items, :id, :name_with_sub) %></td>
       <td><%= f.collection_select(:action_id, Action.all, :id, :action) %></td>
       <td><%= f.number_field :quantity %></td>
-      <td><%= f.collection_select(:loc1, Location.all, :id, :name) %></td>
-      <td><%= f.collection_select(:loc2, Location.all, :id, :name) %></td>
+      <td><%= f.collection_select(:loc1, @locations, :id, :name) %></td>
+      <td><%= f.collection_select(:loc2, @locations, :id, :name) %></td>
     </tr>
       <% end %>
     <% end %>

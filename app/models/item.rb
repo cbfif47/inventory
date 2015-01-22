@@ -6,8 +6,8 @@ class Item < ActiveRecord::Base
     "#{name} #{sub}"
   end
 
-  def self.remaining(item, location)
-    Transaction.remain(item.id, location)
+  def self.remaining(item, location, min=0, max=Transaction.maximum(:id))
+    Transaction.remain(item.id, location,min,max)
   end
   
   def self.hassome(location)

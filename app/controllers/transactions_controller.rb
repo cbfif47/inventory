@@ -26,14 +26,14 @@ end
         if k['quantity'] != ''
           if @preroll.action_id == 4 #adjustment logic
             if k['quantity'].to_i > k['oldquant'].to_i
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['quantity'].to_i-k['oldquant'].to_i), :loc1 => 1, :loc2 => k['loc1'], :group_id => k['group_id'])
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['quantity'].to_i-k['oldquant'].to_i), :loc1 => 1, :loc2 => k['loc1'], :group_id => current_user.group_id)
               @transaction.save
             else
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :loc2 => 1, :group_id => k['group_id'])
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :loc2 => 1, :group_id => current_user.group_id)
               @transaction.save
             end
           else
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => k['quantity'], :loc1 => k['loc1'], :loc2 => k['loc2'], :group_id => k['group_id'])
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => k['quantity'], :loc1 => k['loc1'], :loc2 => k['loc2'], :group_id => current_user.group_id)
               @transaction.save
           end
         else
@@ -82,6 +82,7 @@ end
   def  edit_all
     @locations = Location.where(:group_id => current_user.group_id)
     @transactions = Transaction.where(:group_id => current_user.group_id)
+    @items = Item.where(:active => true, :group_id => current_user.group_id) 
   end
   
     
@@ -104,11 +105,11 @@ end
     
 private
     def transaction_params
-        params.require(:transaction).permit(:date,:item_id,:action_id,:quantity,:loc1,:loc2,:group_id)
+            params.require(:transaction).permit(:date,:item_id,:action_id,:quantity,:loc1,:loc2).merge(group_id: current_user.group_id)
     end
           
     def transactions_params(id)
-        params.require(:transaction).fetch(id).permit(:date,:item_id,:action_id,:quantity,:loc1,:loc2,:group_id)
+params.require(:transaction).fetch(id).permit(:date,:item_id,:action_id,:quantity,:loc1,:loc2).merge(group_id: current_user.group_id)
     end
  
 

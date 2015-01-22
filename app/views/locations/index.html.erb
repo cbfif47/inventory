@@ -1,21 +1,23 @@
 <h1>All Locations</h1>
  
-<table>
+<table class="u-full-width">
+  <thead>
   <tr>
     <th>Location</th>
     <th>Primary</th>
     <th>Active</th>
     <th></th>    
   </tr>
- 
+  </thead>
+  <tbody>
   <% @locations.each do |location| %>
     <tr>
       <td><%= location.name %></td>
       <td><%= radio_button_tag 'primary', '1', location.available, :disabled => true %></td>
       <td><%= check_box_tag 'active', '1', location.active, :disabled => true %></td>
       <td><%= link_to 'Edit', edit_location_path(location) %></td>
-    <!--  <td><%= link_to 'Destroy', location_path(location), method: :delete, data: {confirm: 'Are you sure?'} %></td>    dont wanna destroy--!> 
     </tr>
   <% end %>
+  </tbody>
 </table>
 <%= link_to 'Add New Location', new_location_path %>

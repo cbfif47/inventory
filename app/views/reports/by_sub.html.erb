@@ -1,7 +1,8 @@
 <h1>Sub Report</h1>
 
-<table>
-  <tr>
+<table class="u-full-width">
+  <thead>
+    <tr>
     <th>Sub</th>
     <% @locations.each do |location| %>
     <th><%= location.name %></th>
@@ -9,7 +10,8 @@
    <th>Avg Sales</th>
    <th>Til Gone</th>
   </tr>
- 
+  </thead>
+  <tbody>
   <% @subs.each do |sub| %>
     <tr >
       <td><%= sub %></td>
@@ -20,4 +22,5 @@
         <td><%= Transaction.gonesub(sub) %></td>
     </tr>
   <% end %>
+  </tbody>
 </table>

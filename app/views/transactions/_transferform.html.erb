@@ -13,7 +13,6 @@
       <%= f.hidden_field :date, :value => @preroll.date %>
       <%= f.hidden_field :action_id, :value => '3' %>
       <%= f.hidden_field :loc1, :value => @preroll.loc1 %>
-      <%= f.hidden_field :group_id, :value => current_user.group_id %>
       <td><%= f.collection_select(:loc2, @locations, :id, :name, {:selected => @preroll.loc1}) %></td>
       <td><%= f.collection_select(:item_id, Item.all, :id, :name_with_sub) %></td>
       <td><%= f.number_field :quantity %></td>

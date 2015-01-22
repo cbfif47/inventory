@@ -42,7 +42,7 @@ end
     
     private
     def item_params
-      params.require(:item).permit(:name,:sub,:active,:group_id)
+      params.require(:item).permit(:name,:sub,:active).merge(group_id: current_user.group_id)
     end
     
 end

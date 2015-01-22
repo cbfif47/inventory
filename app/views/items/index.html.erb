@@ -14,7 +14,6 @@
     <tr>
       <td><%= item.name %></td>
       <td><%= item.sub %></td>
-      <td><%= item.group_id ? item.group.name : "" %></td>
       <td><%= check_box_tag 'active', '1', item.active, :disabled => true %></td>
       <td><%= link_to 'Edit', edit_item_path(item) %></td>
 

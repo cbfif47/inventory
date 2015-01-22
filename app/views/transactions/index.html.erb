@@ -1,8 +1,8 @@
 <h1>All Transactions</h1>
  
-<table>
+<table class="u-full-width">
+  <thead>
   <tr>
-    <th>ID</th>
     <th>Date</th>
     <th>Item</th>
     <th>Action</th>
@@ -12,21 +12,33 @@
     <th></th>
     <th></th>
   </tr>
- 
+  </thead>
+  <tbody>
   <% @transactions.each do |transaction| %>
     <tr>
-      <td><%= transaction.id %></td>
       <td><%= transaction.date.strftime("%-m/%-d/%y") %></td>
       <td><%= transaction.item_id ? transaction.item.name_with_sub : "" %></td>
       <td><%= transaction.action_id ? transaction.action.action : "" %></td>
-      <td><%= transaction.quantity %></td>
+      <% if transaction.action_id == 1 %>
+<td class="neg">
+<% elsif transaction.action_id == 2 %>
+  <td class="pos">
+<% elsif transaction.action_id == 4 && transaction.loc1 == 1 %> 
+<td class="pos">
+<% elsif transaction.action_id == 4 && transaction.loc2 == 1 %> 
+<td class="neg">
+    <% else %>
+  <td>
+    <% end %>
+<%= transaction.quantity %></td>
       <td><%= transaction.loc1 ? @locations.find(transaction.loc1).name : "" %></td>
       <td><%= transaction.loc2 ?  @locations.find(transaction.loc2).name : "" %></td>
-      <td><%= transaction.group_id ?  transaction.group.name : "" %></td>
+
       <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
       <td><%= link_to 'Destroy', transaction_path(transaction), method: :delete, data: {confirm: 'Are you sure?'} %></td>
     </tr>
   <% end %>
+  </tbody>
 </table>
 <br>
 
