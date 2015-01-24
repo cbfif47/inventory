@@ -2,7 +2,9 @@ class Transaction < ActiveRecord::Base
   belongs_to :item
   belongs_to :action
   belongs_to :group
-    @primary = Location.where(:available => true).first
+  scope :owned, ->(user) { where("group_id = ?", user.group_id) }
+  scope :active, -> {where("active = ?", true)}
+    @primary = Location.where(:available => true).first #FIXME
     
   
     def net
@@ -13,8 +15,8 @@ class Transaction < ActiveRecord::Base
         end
     end
   
-  def self.remain(item, location, min=0, max=self.maximum(:id))
-    self.where("item_id = ? AND loc2 = ? AND id >= ? AND id <= ?", item, location, min, max).sum(:quantity) - self.where("item_id = ? AND loc1 = ? AND id >= ? AND id <= ?", item, location, min, max).sum(:quantity)
+  def self.remain(item, location)
+    self.where("item_id = ? AND loc2 = ?", item, location).sum(:quantity) - self.where("item_id = ? AND loc1 = ?", item, location).sum(:quantity)
             
     end
     
@@ -53,5 +55,26 @@ class Transaction < ActiveRecord::Base
         (self.subrpt(sub, @primary) / self.avgsub(sub)).round(2)
         end
     end
-    
+  
+  def self.make_batch(params, user)
+        params.each do |k,v|
+        if k['quantity'] != ''
+          if k['action_id'] == '4' #adjustment logic
+            if k['quantity'].to_i > k['oldquant'].to_i
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['quantity'].to_i-k['oldquant'].to_i), :loc1 => 1, :loc2 => k['loc1'], :group_id => user.group_id)
+              @transaction.save
+            else
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :loc2 => 1, :group_id => user.group_id)
+              @transaction.save
+            end
+          else
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => k['quantity'], :loc1 => k['loc1'], :loc2 => k['loc2'], :group_id => user.group_id)
+              @transaction.save
+          end
+        else
+        end
+    end    
+
+  end
+  
 end

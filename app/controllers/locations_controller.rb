@@ -1,18 +1,20 @@
 class LocationsController < ApplicationController
+    before_action :set_location, only: [:show, :edit, :update, :destroy]
+  
   def new
       @location = Location.new
   end
 
-def create
+  def create
         @location = Location.new(location_params)
+        @others = @location.others(current_user)
         if @location.save
-          @others = Location.where("id != ? AND group_id = ?", @location.id, current_user.group_id)
             if @location.available == true
                 @others.each do |other|
                     other.update(:available => false)
                 end
                 else
-              @primary = Location.where("available = ? AND group_id = ?", true, current_user.group_id)
+              @primary = Location.primary(current_user) 
               unless @primary.any?
                 @location.update(available: true)
               end
@@ -21,27 +23,22 @@ def create
         else
             render 'new'
         end
-end
+  end
 
-def show
-    @location = Location.find(params[:id])
-end
+  def show
+  end
     
-    def edit
-        @location = Location.find(params[:id])
-    end
+  def edit
+  end
     
-    def update
-        @location = Location.find(params[:id])
-      @others = Location.where("id != ? AND group_id = ?", params[:id], current_user.group_id)
-        
+  def update
+    @others = @location.others(current_user)
         if @location.update(location_params)
             if @location.available == true
                 @others.each do |other|
                     other.update(:available => false)
                 end
                 else
-                @primary = Location.where("available = ? AND group_id = ?", true, current_user.group_id)
               unless @primary.any?
                 @location.update(available: true)
               end
@@ -60,9 +57,26 @@ end
   def delete
   end
     
-    private
+  private
     def location_params
         params.require(:location).permit(:name,:available,:active).merge(group_id: current_user.group_id)
     end
     
+    def check_user(object)
+      unless object.group_id == current_user.group_id
+        flash[:error] = "Quit sneaking around, this aint yours!"
+        redirect_to root_url # halts request cycle
+      end
+    end 
+  
+  def set_location
+    @location = Location.find(params[:id])
+    check_user(@location)
+    @primary = Location.primary(current_user)
+  end
+  
+  def set_others
+
+  end
+  
 end

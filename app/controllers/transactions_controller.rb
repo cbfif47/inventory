@@ -1,88 +1,53 @@
 class TransactionsController < ApplicationController
-
-    
-def new
+  before_action :set_trans, only: [:show, :edit, :update, :destroy]
+  before_action :set_items_locs, only: [:show, :edit, :update, :destroy, :index]
+  
+  def new
       @transaction = Transaction.new
-      @preroll = Preroll.where(:group_id => current_user.group_id).first
-      @items = Item.where('active = ? AND group_id = ?', true, current_user.group_id)
-      @locations = Location.where("active = ? AND id != ? AND group_id = ?",true, @preroll.loc1, current_user.group_id)
-
-
-end
-
-# def create
-#        @transaction = Transaction.new(transaction_params)
-#        
-#        if @transaction.save
-#            redirect_to action: 'index'
-#        else
-#            render 'new'
-#        end
-#end
+      @preroll = Preroll.owned(current_user)
+      @items = Item.owned(current_user).active
+      @otherlocs = Location.owned(current_user).active.where("id != ?", @preroll.loc1)
+  end
 
   def create
-    @preroll = Preroll.where(:group_id => current_user.group_id).first
-    params['transaction'].each do |k,v|
-        if k['quantity'] != ''
-          if @preroll.action_id == 4 #adjustment logic
-            if k['quantity'].to_i > k['oldquant'].to_i
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['quantity'].to_i-k['oldquant'].to_i), :loc1 => 1, :loc2 => k['loc1'], :group_id => current_user.group_id)
-              @transaction.save
-            else
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :loc2 => 1, :group_id => current_user.group_id)
-              @transaction.save
-            end
-          else
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => k['quantity'], :loc1 => k['loc1'], :loc2 => k['loc2'], :group_id => current_user.group_id)
-              @transaction.save
-          end
-        else
-        end
-    end    
+    if Transaction.make_batch(params['transaction'], current_user)
     redirect_to action: 'index'
-end 
+    else
+      redirect_to action: 'new'
+    end
+  end 
   
-def show
-    @transaction = Transaction.find(params[:id])
-end
+  def show
+  end
     
-def edit
-    @transaction = Transaction.find(params[:id])
-end
+  def edit
+  end
     
-def update
-    @transaction = Transaction.find(params[:id])
-        
-        
+  def update
     if @transaction.update(transaction_params)
             redirect_to action: 'index'
                     else
             render 'edit'
     end
-end
+  end
     
   def index
-    @transactions = Transaction.where(:group_id => current_user.group_id)
-    @locations = Location.where("group_id = ? OR id = ?", current_user.group_id, 1)
-    @formlocs = Location.where(:group_id => current_user.group_id)
-    @items = Item.where(:active => true, :group_id => current_user.group_id) 
-    if   Preroll.where(:group_id => current_user.group_id).first
-          @preroll = Preroll.where(:group_id => current_user.group_id).first
+    @transactions = Transaction.owned(current_user)
+    if   Preroll.owned(current_user)
+      @preroll = Preroll.owned(current_user)
         else @preroll = Preroll.new
         end
   end
 
   def destroy
-    @transaction = Transaction.find(params[:id])
-    @transaction.destroy
-        
+    @transaction.destroy        
     redirect_to transactions_path
   end
 
   def  edit_all
-    @locations = Location.where(:group_id => current_user.group_id)
-    @transactions = Transaction.where(:group_id => current_user.group_id)
-    @items = Item.where(:active => true, :group_id => current_user.group_id) 
+    @locations = Location.where("group_id = ? OR id = ?", current_user.group_id, 1)
+    @transactions = Transaction.owned(current_user)
+    @items = Item.owned(current_user).active
   end
   
     
@@ -94,23 +59,24 @@ end
     redirect_to transactions_path
   end
     
-#  def  new_batch
-#    @preroll = Preroll.where(:group_id => current_user.group_id).first
-#    @location = Location.where("available = ? AND group_id", true).first
-#    @items = Item.where(:active => true)       
-#  end
-  
-    
-   
-    
 private
-    def transaction_params
-            params.require(:transaction).permit(:date,:item_id,:action_id,:quantity,:loc1,:loc2).merge(group_id: current_user.group_id)
-    end
+  def transaction_params
+   params.require(:transaction).permit(:date,:item_id,:action_id,:quantity,:loc1,:loc2).merge(group_id: current_user.group_id)
+  end
           
-    def transactions_params(id)
+  def transactions_params(id)
 params.require(:transaction).fetch(id).permit(:date,:item_id,:action_id,:quantity,:loc1,:loc2).merge(group_id: current_user.group_id)
-    end
+  end
  
+  def set_trans
+    @transaction = Transaction.find(params[:id])
+    check_user(@transaction)
+  end
+  
+  def set_items_locs
+    @items = Item.owned(current_user).active
+    @locations = Location.owned(current_user).active
+  end
+
 
 end

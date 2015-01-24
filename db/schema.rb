@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150120055243) do
+ActiveRecord::Schema.define(version: 20150122230351) do
 
   create_table "actions", force: true do |t|
     t.string   "action"
@@ -55,6 +55,13 @@ ActiveRecord::Schema.define(version: 20150120055243) do
   end
 
   add_index "prerolls", ["action_id"], name: "index_prerolls_on_action_id"
+
+  create_table "shows", force: true do |t|
+    t.date     "date"
+    t.string   "venue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "transactions", force: true do |t|
     t.date     "date"

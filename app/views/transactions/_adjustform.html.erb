@@ -1,10 +1,14 @@
 <%= form_for @transaction, :html => { :method => :post } do %>
 <h1>Adjust <%= Location.find_by(id: @preroll.loc1).name %></h1>
-<table>
+<table class="u-full-width">
+  <thead>
+    <thead>
     <tr>
       <th>Item</th>
       <th>Quantity</th>
     </tr>
+    </thead>
+    <tbody>
     <% @items.each do |item| %>
       <% transaction = Transaction.new(:item_id => item.id) %>
       <%= fields_for "transaction[]", transaction do |f| %>
@@ -13,13 +17,15 @@
       <%= f.hidden_field :action_id, :value => 4 %>
       <%= f.hidden_field :loc1, :value => @preroll.loc1 %>
       <%= f.hidden_field :loc2, :value => 1 %>
-      <%= f.hidden_field :oldquant, :value => Item.remaining(item, @preroll.loc1) %>
-      <td><%= f.collection_select(:item_id, Item.all, :id, :name_with_sub) %></td>
-      <td><%= f.number_field :quantity, :placeholder => Item.remaining(item, @preroll.loc1)%></td>
+      <%= f.hidden_field :oldquant, :value => item.remaining(@preroll.loc1) %>
+      <%= f.hidden_field :item_id, :value => item.id %>
+      <td><%= item.name_with_sub %></td>
+      <td><%= f.number_field :quantity, :placeholder => item.remaining(@preroll.loc1)%></td>
       <td><%=  %></td>
     </tr>
       <% end %>
     <% end %>
+  </tbody>
   </table>
 
   <div class="actions">

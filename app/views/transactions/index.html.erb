@@ -1,5 +1,20 @@
-<h1>All Transactions</h1>
+<h1><%=current_user.group.name.possessive  %> Actions</h1>
  
+<% if @locations.any? && @items.any? %>
+<%= form_for @preroll do |f| %>
+  
+  <p>   
+    <%= f.date_field(:date, value: Date.today) %>
+    <%= f.collection_select(:action_id, Action.all, :id, :action) %>
+    <%= f.collection_select(:loc1, @locations, :id, :name) %>
+      <%= f.hidden_field :group_id, :value => current_user.group_id %>
+    <%= f.submit "Lez do it" %>
+  </p>
+
+<% end %>
+<% else %>
+Go make some items and locations!
+<% end %>
 <table class="u-full-width">
   <thead>
   <tr>
@@ -31,8 +46,8 @@
   <td>
     <% end %>
 <%= transaction.quantity %></td>
-      <td><%= transaction.loc1 ? @locations.find(transaction.loc1).name : "" %></td>
-      <td><%= transaction.loc2 ?  @locations.find(transaction.loc2).name : "" %></td>
+      <td><%= transaction.loc1 ? Location.find(transaction.loc1).name : "" %></td>
+      <td><%= transaction.loc2 ?  Location.find(transaction.loc2).name : "" %></td>
 
       <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
       <td><%= link_to 'Destroy', transaction_path(transaction), method: :delete, data: {confirm: 'Are you sure?'} %></td>
@@ -42,20 +57,6 @@
 </table>
 <br>
 
-<% if @formlocs.any? && @items.any? %>
-<%= form_for @preroll do |f| %>
-  
-  <p>   
-    <%= f.date_field(:date, value: Date.today) %>
-    <%= f.collection_select(:action_id, Action.all, :id, :action) %>
-    <%= f.collection_select(:loc1, @formlocs, :id, :name) %>
-      <%= f.hidden_field :group_id, :value => current_user.group_id %>
-    <%= f.submit "Lez do it" %>
-  </p>
 
-<% end %>
-<% else %>
-Go make some items and locations!
-<% end %>
 <%= link_to 'Back Home', root_path %>
 <%= link_to 'Edit All', edit_all_path() %>

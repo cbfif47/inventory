@@ -13,22 +13,18 @@
 
   <p>
     <%= f.label :date %>
-    <%= f.date_field :date %><br>
+    <%= f.date_field :date %>
     <%= f.label :item_id %>
-    <%= f.collection_select(:item_id, Item.all, :id, :name_with_sub) %><br>
+    <%= f.collection_select(:item_id, @items, :id, :name_with_sub) %>
     <%= f.label :action_id %>
-    <%= f.collection_select(:action_id, Action.all, :id, :action) %><br>
+    <%= f.collection_select(:action_id, Action.all, :id, :action) %>
     <%= f.label :quantity %>
-    <%= f.number_field :quantity %><br>
-    <%= f.label 'From' %>
-    <%= f.collection_select(:loc1, Location.all, :id, :name) %><br>
-    <%= f.label 'To' %>
-    <%= f.collection_select(:loc2, Location.all, :id, :name) %><br>
-
+    <%= f.number_field :quantity %>
   </p>
-
- 
   <p>
     <%= f.submit %>
   </p>
 <% end %>
+If you need to change the location, just detroy this action and make a new one!
+
+ 

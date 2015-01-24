@@ -1,26 +1,34 @@
 <%= form_for @transaction, :html => { :method => :post } do %>
 <h1>Sell from <%= Location.find_by(id: @preroll.loc1).name %></h1>
-<table>
+<table class="u-full-width">
+  <thead>
     <tr>
       <th>Item</th>
       <th>Quantity</th>
+      <th>Available</th>
     </tr>
+  </thead>
+  <tbody>
     <% @items.each do |item| %>
-      <% transaction = Transaction.new(:item_id => item.id) %>
-      <%= fields_for "transaction[]", transaction do |f| %>
-    <tr class="form">
-      <%= f.hidden_field :date, :value => @preroll.date %>
-      <%= f.hidden_field :action_id, :value => 1 %>
-      <%= f.hidden_field :loc1, :value => @preroll.loc1 %>
-      <%= f.hidden_field :loc2, :value => 1 %>
-      <td><%= f.collection_select(:item_id, Item.all, :id, :name_with_sub) %></td>
-      <td><%= f.number_field :quantity %></td>
-      <%# Transaction.remain(item, @preroll.loc1) %>
-      <td><%= Item.remaining(item, @preroll.loc1) %></td>
-    </tr>
-      <% end %>
+        <% if item.hassome(@preroll.loc1) %>
+        <% transaction = Transaction.new(:item_id => item.id) %>
+          <%= fields_for "transaction[]", transaction do |f| %>
+            <tr class="form">
+            <%= f.hidden_field :date, :value => @preroll.date %>
+            <%= f.hidden_field :action_id, :value => 1 %>
+            <%= f.hidden_field :loc1, :value => @preroll.loc1 %>
+            <%= f.hidden_field :loc2, :value => 1 %>
+            <%= f.hidden_field :item_id, :value => item.id %>
+            <td><%= item.name_with_sub %></td>
+            <td><%= f.number_field :quantity %></td>
+            <td><%= item.remaining(@preroll.loc1) %></td>
+            </tr>
+            <% end %>
+        <% else %>
+       <% end %>
     <% end %>
-  </table>
+  </tbody>
+</table>
 
   <div class="actions">
     <%= submit_tag "Sell that shit"%>
