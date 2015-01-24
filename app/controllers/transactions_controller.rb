@@ -32,7 +32,7 @@ class TransactionsController < ApplicationController
   end
     
   def index
-    @transactions = Transaction.owned(current_user)
+    @transactions = Transaction.owned(current_user).paginate(:page => params[:page], :per_page => 20)
     if   Preroll.owned(current_user)
       @preroll = Preroll.owned(current_user)
         else @preroll = Preroll.new

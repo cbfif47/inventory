@@ -2,7 +2,7 @@ class Transaction < ActiveRecord::Base
   belongs_to :item
   belongs_to :action
   belongs_to :group
-  scope :owned, ->(user) { where("group_id = ?", user.group_id) }
+  scope :owned, ->(user) { where("group_id = ?", user.group_id).order(created_at: :desc) }
   scope :active, -> {where("active = ?", true)}
     @primary = Location.where(:available => true).first #FIXME
     
