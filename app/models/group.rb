@@ -1,6 +1,7 @@
 class Group < ActiveRecord::Base
-  has_many :users
-  has_many :items
-  has_many :locations
-  has_many :transactions
+  has_many :users, :dependent => :destroy
+  has_many :items, :dependent => :destroy
+  has_many :locations, :dependent => :destroy
+  has_many :transactions, :dependent => :destroy
+  has_many :shows, :dependent => :destroy
 end

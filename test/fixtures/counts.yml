@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  show_id: 
+  item_id: 
+  in: 1
+  out: 
+
+two:
+  show_id: 
+  item_id: 
+  in: 1
+  out: 

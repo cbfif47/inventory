@@ -1,14 +1,14 @@
 class ReportsController < ApplicationController
     def summary
-      @locations = Location.where(:active => true, :group_id =>current_user.group_id)
-      @items = Item.where(:active => true, :group_id =>current_user.group_id)
+      @locations = Location.owned(current_user).active
+      @items = Item.owned(current_user).active
 
 
     end
     
     def by_sub
-      @locations = Location.where(:active => true, :group_id => current_user.group_id)
-      @subs = Item.where(group_id: current_user.group_id, active: true).uniq.pluck(:sub)
+      @locations = Location.owned(current_user).active
+      @subs = Item.owned(current_user).active.uniq.pluck(:sub)
     end
     
     def index

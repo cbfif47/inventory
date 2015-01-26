@@ -43,7 +43,7 @@ class ShowsController < ApplicationController
     end
 
     def show_params
-      params.require(:show).permit(:date, :venue)
+      params.require(:show).permit(:date, :venue).merge(group_id: current_user.group_id)
     end
   
     def check_user(object)

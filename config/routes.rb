@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/shows/:id/counts/in' => 'counts#new', :as => :count_in
+  resources :counts
   resources :shows
 
   devise_for :users, :path_prefix => 'd'

@@ -4,7 +4,7 @@ class Location < ActiveRecord::Base
     scope :active, -> {where("active = ?", true)}
   
   def self.primary(user)
-    self.where("available = ? AND group_id = ?", true, user.group_id)
+    self.where("available = ? AND group_id = ?", true, user.group_id).first
   end
   
   def others(user)

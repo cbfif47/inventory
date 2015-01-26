@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag    'normalize' %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -22,6 +23,8 @@
       <%= link_to 'Items', items_path, :class => 'nav' %>  
       <%= link_to 'Actions', transactions_path, :class => 'nav' %> 
       <%= link_to 'Reports', reports_path, :class => 'nav' %>
+      <%= link_to 'Shows', shows_path, :class => 'nav' %>
+      <%= link_to 'Counts', counts_path, :class => 'nav' %>
 </div>
     <% else %>
     <% end %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Show:</strong>
+  <%= @count.show %>
+</p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @count.item %>
+</p>
+
+<p>
+  <strong>In:</strong>
+  <%= @count.in %>
+</p>
+
+<p>
+  <strong>Out:</strong>
+  <%= @count.out %>
+</p>
+
+<%= link_to 'Edit', edit_count_path(@count) %> |
+<%= link_to 'Back', counts_path %>

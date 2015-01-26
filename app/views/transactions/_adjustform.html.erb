@@ -20,7 +20,7 @@
       <%= f.hidden_field :oldquant, :value => item.remaining(@preroll.loc1) %>
       <%= f.hidden_field :item_id, :value => item.id %>
       <td><%= item.name_with_sub %></td>
-      <td><%= f.number_field :quantity, :placeholder => item.remaining(@preroll.loc1)%></td>
+      <td><%= f.number_field :quantity, :placeholder => item.remaining(@preroll.loc1), :min =>0 %></td>
       <td><%=  %></td>
     </tr>
       <% end %>
