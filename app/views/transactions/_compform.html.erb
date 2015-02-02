@@ -1,0 +1,24 @@
+<h1>Give It Away</h1>
+<%= form_for @transaction, :url => single_create_path, :html => { :method => :post } do |f| %>
+  <% if @transaction.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@transaction.errors.count, "error") %> prohibited
+      this transaction from being saved:</h2>
+    <ul>
+    <% @transaction.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <p>
+    <%= @count.show.date %>
+    <%= @count.show.venue %><br>
+    <%= @count.item.name_with_sub %>
+    <%= f.label :quantity %><%= f.number_field :quantity %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

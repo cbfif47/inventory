@@ -37,16 +37,9 @@ class ItemsController < ApplicationController
     
   private
     def item_params
-      params.require(:item).permit(:name,:sub,:active).merge(group_id: current_user.group_id)
+      params.require(:item).permit(:name,:sub,:active,:rate,:soft).merge(group_id: current_user.group_id)
     end
 
-  
-    def check_user(object)
-      unless object.group_id == current_user.group_id
-      flash[:error] = "Quit sneaking around, this aint yours!"
-      redirect_to root_url # halts request cycle
-      end
-    end  
   
     def set_item
       @item = Item.find(params[:id])

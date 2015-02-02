@@ -1,8 +1,9 @@
 class Transaction < ActiveRecord::Base
+  include Ownable
   belongs_to :item
   belongs_to :action
-  belongs_to :group
-  scope :owned, ->(user) { where("group_id = ?", user.group_id).order(created_at: :desc) }
+  belongs_to :count
+  
   scope :active, -> {where("active = ?", true)}
     @primary = Location.where(:available => true).first #FIXME
     
@@ -56,25 +57,25 @@ class Transaction < ActiveRecord::Base
         end
     end
   
-  def self.make_batch(params, user)
-        params.each do |k,v|
+  def self.make_batch(k,v, user, count="")
         if k['quantity'] != ''
           if k['action_id'] == '4' #adjustment logic
             if k['quantity'].to_i > k['oldquant'].to_i
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['quantity'].to_i-k['oldquant'].to_i), :loc1 => 1, :loc2 => k['loc1'], :group_id => user.group_id)
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['quantity'].to_i-k['oldquant'].to_i), :loc1 => 1, :loc2 => k['loc1'], :group_id => user.group_id, :count_id => count)
+              @transaction.save
+            elsif k['quantity'].to_i < k['oldquant'].to_i
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :loc2 => 1, :group_id => user.group_id, :count_id => count)
               @transaction.save
             else
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :loc2 => 1, :group_id => user.group_id)
-              @transaction.save
             end
           else
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => k['quantity'], :loc1 => k['loc1'], :loc2 => k['loc2'], :group_id => user.group_id)
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :loc2 => k['loc2'], :group_id => user.group_id, :count_id => count)
               @transaction.save
           end
         else
         end
     end    
 
-  end
+
   
 end

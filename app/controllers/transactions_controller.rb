@@ -8,13 +8,31 @@ class TransactionsController < ApplicationController
       @items = Item.owned(current_user).active
       @otherlocs = Location.owned(current_user).active.where("id != ?", @preroll.loc1)
   end
+  
+  def count_action
+    @transaction = Transaction.new
+    @count = Count.find(params[:id])
+    @primary = Location.primary(current_user)
+    @otherlocs = @primary.others(current_user)
+  end
+
+  def single_create
+    @count = Count.find(params[:id])
+    @primary = Location.primary(current_user)
+    @transaction = Transaction.new(transaction_params.merge(:count_id => @count.id, :item_id => @count.item_id, :date => @count.show.date, :loc1 => @primary.id, :loc2 => 1, :action_id => 1))
+            if @transaction.save
+            redirect_to action: 'index'
+        else
+            render 'new'
+        end
+  end
 
   def create
-    if Transaction.make_batch(params['transaction'], current_user)
-    redirect_to action: 'index'
-    else
-      redirect_to action: 'new'
+    params['transaction'].each do |k,v|
+    Transaction.make_batch(k,v, current_user)
     end
+    redirect_to action: 'index'
+
   end 
   
   def show

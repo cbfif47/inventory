@@ -5,7 +5,9 @@
   <tr>
     <th>Name</th>
     <th>Size/Media</th>
+    <th>Rate</th>
     <th>Active</th>
+    <th>Soft</th>
     <th></th>    
   </tr>
  </thead>
@@ -14,7 +16,9 @@
     <tr>
       <td><%= item.name %></td>
       <td><%= item.sub %></td>
+      <td><%= item.rate %></td>
       <td><%= check_box_tag 'active', '1', item.active, :disabled => true %></td>
+      <td><%= check_box_tag 'soft', '1', item.soft, :disabled => true %></td>
       <td><%= link_to 'Edit', edit_item_path(item) %></td>
 
     </tr>

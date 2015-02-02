@@ -1,10 +1,9 @@
 class WelcomeController < ApplicationController
   def index
-        if   Preroll.where(:group_id => current_user.group_id).first
-          @preroll = Preroll.where(:group_id => current_user.group_id).first
-        else @preroll = Preroll.new
-        end
-    @locations = Location.where(:active => true, :group_id => current_user.group_id) 
-    @items = Item.where(:active => true, :group_id => current_user.group_id) 
+    @locations = Location.owned(current_user)
+    @items = Item.owned(current_user)
+    @show = Show.owned(current_user).where(date: Date.today).first
+    @shows = Show.hascounts(current_user)
+    @next = Show.owned(current_user).where("date > ?", @shows.first.date).order(:date).first
   end
 end

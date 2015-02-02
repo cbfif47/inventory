@@ -1,6 +1,5 @@
 class Location < ActiveRecord::Base
-    belongs_to :group
-    scope :owned, ->(user) { where("group_id = ?", user.group_id) }
+    include Ownable
     scope :active, -> {where("active = ?", true)}
   
   def self.primary(user)
@@ -8,6 +7,6 @@ class Location < ActiveRecord::Base
   end
   
   def others(user)
-    Location.where("id != ? AND group_id = ?", self.id, user.group_id)
+    Location.where("id != ? AND group_id = ? AND active = ?", self.id, user.group_id, true)
   end
 end

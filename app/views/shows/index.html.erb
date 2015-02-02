@@ -14,8 +14,7 @@
       <tr>
         <td><%= show.date %></td>
         <td><%= show.venue %></td>
-        <td><%= show.group.name %></td>
-        <td><%= link_to 'Count In', count_in_path(show) %></td>
+        <td><%= link_to 'Showtime', counts_path(show) %></td>
         <td><%= link_to 'Edit', edit_show_path(show) %></td>
         <td><%= link_to 'Destroy', show, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

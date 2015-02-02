@@ -206,6 +206,10 @@ input[type="button"]:focus {
   color: #333;
   border-color: #888;
   outline: 0; }
+.button.button-disabled{
+  background-color: #EEEEEE;
+}
+
 .button.button-primary,
 button.button-primary,
 input[type="submit"].button-primary,
@@ -213,7 +217,25 @@ input[type="reset"].button-primary,
 input[type="button"].button-primary {
   color: #FFF;
   background-color: #33C3F0;
-  border-color: #33C3F0; }
+  border-color: #33C3F0;
+  height: 12px;
+  width: 20px;
+  padding: 0 0px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 12px;
+}
+.button.button-redo {
+  color: #FFF;
+  background-color: #D11919;
+  border-color: #D11919;
+  height: 12px;
+  width: 20px;
+  padding: 0 0px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 12px;
+}
 .button.button-primary:hover,
 button.button-primary:hover,
 input[type="submit"].button-primary:hover,
@@ -334,9 +356,10 @@ pre > code {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 th,
 td {
-  padding: 12px 15px;
+  padding: 5px 5px;
   text-align: center;
-  border-bottom: 1px solid #E1E1E1; }
+  border-bottom: 1px solid #E1E1E1;
+  border-right: 1px solid #F9F9F9;}
 th:first-child,
 td:first-child {
   padding-left: 0; }

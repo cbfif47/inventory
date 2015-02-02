@@ -62,12 +62,6 @@ class LocationsController < ApplicationController
         params.require(:location).permit(:name,:available,:active).merge(group_id: current_user.group_id)
     end
     
-    def check_user(object)
-      unless object.group_id == current_user.group_id
-        flash[:error] = "Quit sneaking around, this aint yours!"
-        redirect_to root_url # halts request cycle
-      end
-    end 
   
   def set_location
     @location = Location.find(params[:id])

@@ -1,11 +1,11 @@
 class Item < ActiveRecord::Base
+    include Ownable
     has_many :transactions, :dependent => :destroy
-    belongs_to :group
     has_many :counts, :dependent => :destroy
-    scope :owned, ->(user) { where("group_id = ?", user.group_id) }
     scope :active, -> {where("active = ?", true)}
-  scope :counted, ->(show) {joins(:counts).where(counts:{show_id:show.id})}
-    
+    scope :counted_in, ->(show) {joins(:counts).where(counts:{show_id:show.id, out:false})}
+    scope :counted_out, ->(show) {joins(:counts).where(counts:{show_id:show.id, out:true})}
+  
   def name_with_sub
     "#{name} #{sub}"
   end

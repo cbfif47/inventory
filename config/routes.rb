@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
-  get '/shows/:id/counts/in' => 'counts#new', :as => :count_in
-  resources :counts
+  resources :tours
   resources :shows
-
   devise_for :users, :path_prefix => 'd'
+  get '/shows/:id/counts' => 'counts#index', :as => :counts
+  get '/shows/:id/:direction' => 'counts#new', :as => :count_in_out
+  get '/counts/:id/:thing' => 'transactions#count_action', :as => :count_action
+  post '/counts/:id/:thing' => 'transactions#single_create', :as => :single_create
+  post 'shows/:id/counts' => 'counts#create', :as => :counts_create
+  resources :counts
+
   resources :users  
   get 'welcome/index'
  root 'welcome#index'

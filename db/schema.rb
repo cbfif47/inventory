@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150126050321) do
+ActiveRecord::Schema.define(version: 20150130201508) do
 
   create_table "actions", force: true do |t|
     t.string   "action"
@@ -23,12 +23,15 @@ ActiveRecord::Schema.define(version: 20150126050321) do
   create_table "counts", force: true do |t|
     t.integer  "show_id"
     t.integer  "item_id"
-    t.integer  "in"
-    t.integer  "out"
+    t.integer  "quantity"
+    t.boolean  "out"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rate"
+    t.integer  "group_id"
   end
 
+  add_index "counts", ["group_id"], name: "index_counts_on_group_id"
   add_index "counts", ["item_id"], name: "index_counts_on_item_id"
   add_index "counts", ["show_id"], name: "index_counts_on_show_id"
 
@@ -45,6 +48,8 @@ ActiveRecord::Schema.define(version: 20150126050321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "group_id"
+    t.integer  "rate"
+    t.boolean  "soft"
   end
 
   create_table "locations", force: true do |t|
@@ -74,7 +79,20 @@ ActiveRecord::Schema.define(version: 20150126050321) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.integer  "tour_id"
   end
+
+  add_index "shows", ["tour_id"], name: "index_shows_on_tour_id"
+
+  create_table "tours", force: true do |t|
+    t.string   "name"
+    t.boolean  "current"
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tours", ["group_id"], name: "index_tours_on_group_id"
 
   create_table "transactions", force: true do |t|
     t.date     "date"
@@ -86,6 +104,7 @@ ActiveRecord::Schema.define(version: 20150126050321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "group_id"
+    t.integer  "count_id"
   end
 
   add_index "transactions", ["action_id"], name: "index_transactions_on_action_id"

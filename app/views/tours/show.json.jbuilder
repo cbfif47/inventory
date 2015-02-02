@@ -1,0 +1,1 @@
+json.extract! @tour, :id, :name, :current, :group_id, :created_at, :updated_at

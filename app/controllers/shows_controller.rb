@@ -4,20 +4,22 @@ class ShowsController < ApplicationController
   respond_to :html
 
   def index
-    @shows = Show.all
+    @shows = Show.owned(current_user)
     respond_with(@shows)
   end
 
   def show
-    respond_with(@show)
+    redirect_to counts_path(@show.id)
   end
 
   def new
     @show = Show.new
+    @tours = Tour.where(:group_id => current_user.group_id)
     respond_with(@show)
   end
 
   def edit
+    @tours = Tour.where(:group_id => current_user.group_id)
   end
 
   def create
@@ -43,13 +45,7 @@ class ShowsController < ApplicationController
     end
 
     def show_params
-      params.require(:show).permit(:date, :venue).merge(group_id: current_user.group_id)
+      params.require(:show).permit(:date, :venue, :tour_id).merge(group_id: current_user.group_id)
     end
   
-    def check_user(object)
-      unless object.group_id == current_user.group_id
-        flash[:error] = "Quit sneaking around, this aint yours!"
-        redirect_to root_url # halts request cycle
-      end
-  end 
 end
