@@ -1,5 +1,5 @@
 <%= form_for @transaction, :html => { :method => :post } do %>
-<h1>Sell from <%= Location.find_by(id: @preroll.loc1).name %></h1>
+<h1>Sell from <%= Location.find_by(id: FIXME.loc1).name %></h1>
 <table class="u-full-width">
   <thead>
     <tr>
@@ -10,18 +10,18 @@
   </thead>
   <tbody>
     <% @items.each do |item| %>
-        <% if item.hassome(@preroll.loc1) %>
+        <% if item.hassome(FIXME.loc1) %>
         <% transaction = Transaction.new(:item_id => item.id) %>
           <%= fields_for "transaction[]", transaction do |f| %>
             <tr class="form">
-            <%= f.hidden_field :date, :value => @preroll.date %>
+            <%= f.hidden_field :date, :value => FIXME.date %>
             <%= f.hidden_field :action_id, :value => 1 %>
-            <%= f.hidden_field :loc1, :value => @preroll.loc1 %>
+            <%= f.hidden_field :loc1, :value => FIXME.loc1 %>
             <%= f.hidden_field :loc2, :value => 1 %>
             <%= f.hidden_field :item_id, :value => item.id %>
             <td><%= item.name_with_sub %></td>
             <td><%= f.number_field :quantity %></td>
-            <td><%= item.remaining(@preroll.loc1) %></td>
+            <td><%= item.remaining(FIXME.loc1) %></td>
             </tr>
             <% end %>
         <% else %>

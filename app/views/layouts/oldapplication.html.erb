@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>MrchBox</title>
+    <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag    'normalize' %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="container">
+  <% if user_signed_in? %>
+  <div class="row">
+    <div class="two columns">
+
+      <%= link_to 'Home', root_path, :class => 'nav' %> 
+      <%= link_to 'Locations', locations_path, :class => 'nav' %> 
+      <%= link_to 'Items', items_path, :class => 'nav' %>  
+      <%= link_to 'Actions', transactions_path, :class => 'nav' %> 
+      <%= link_to 'Reports', reports_path, :class => 'nav' %>
+      <%= link_to 'Shows', shows_path, :class => 'nav' %>
+      <%= link_to 'Tours', tours_path, :class => 'nav' %>
+</div>
+    <% else %>
+    <% end %>
+    <div class="ten columns">
+  <% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+<%= yield %>
+<br><br>
+        
+<% if user_signed_in? %>
+
+      Logged in as <strong><%= current_user.email %></strong>.<br>
+        <% if current_user.admin? %>
+ <%= link_to 'Groups', groups_path %>
+      <%= link_to 'Users', users_path %>
+    <% end %>
+      <%= link_to 'Edit profile', edit_user_registration_path %>
+<%= link_to "Logout", destroy_user_session_path, method: :delete  %>
+
+<% else %>
+
+    <% end %>
+
+  </div>
+    </div>
+</div>
+</body>
+</html>

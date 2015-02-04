@@ -11,24 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150130201508) do
+ActiveRecord::Schema.define(version: 20150204185255) do
 
   create_table "actions", force: true do |t|
-    t.string   "action"
+    t.string   "action",     limit: 30, null: false
     t.integer  "impact"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "counts", force: true do |t|
-    t.integer  "show_id"
-    t.integer  "item_id"
-    t.integer  "quantity"
-    t.boolean  "out"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "show_id",    null: false
+    t.integer  "item_id",    null: false
+    t.integer  "quantity",   null: false
+    t.boolean  "out",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "rate"
-    t.integer  "group_id"
+    t.integer  "group_id",   null: false
   end
 
   add_index "counts", ["group_id"], name: "index_counts_on_group_id"
@@ -36,74 +36,62 @@ ActiveRecord::Schema.define(version: 20150130201508) do
   add_index "counts", ["show_id"], name: "index_counts_on_show_id"
 
   create_table "groups", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "name",       limit: 50, null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "items", force: true do |t|
-    t.string   "name"
-    t.string   "sub"
-    t.boolean  "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "group_id"
-    t.integer  "rate"
-    t.boolean  "soft"
+    t.string   "name",       limit: 50, null: false
+    t.string   "sub",        limit: 50
+    t.boolean  "active",                null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "group_id",              null: false
+    t.integer  "rate",                  null: false
+    t.boolean  "soft",                  null: false
   end
 
   create_table "locations", force: true do |t|
-    t.string   "name"
-    t.boolean  "available"
-    t.boolean  "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       limit: 50
+    t.boolean  "available",             null: false
+    t.boolean  "active",                null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.integer  "group_id"
   end
-
-  create_table "prerolls", force: true do |t|
-    t.date     "date"
-    t.integer  "action_id"
-    t.integer  "loc1"
-    t.integer  "loc2"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "group_id"
-  end
-
-  add_index "prerolls", ["action_id"], name: "index_prerolls_on_action_id"
 
   create_table "shows", force: true do |t|
-    t.date     "date"
-    t.string   "venue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "group_id"
-    t.integer  "tour_id"
+    t.date     "date",                  null: false
+    t.string   "venue",      limit: 50, null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "group_id",              null: false
+    t.integer  "tour_id",               null: false
   end
 
   add_index "shows", ["tour_id"], name: "index_shows_on_tour_id"
 
   create_table "tours", force: true do |t|
-    t.string   "name"
+    t.string   "name",       limit: 50, null: false
     t.boolean  "current"
-    t.integer  "group_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "group_id",              null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   add_index "tours", ["group_id"], name: "index_tours_on_group_id"
 
   create_table "transactions", force: true do |t|
-    t.date     "date"
-    t.integer  "item_id"
-    t.integer  "action_id"
-    t.integer  "quantity"
+    t.date     "date",       null: false
+    t.integer  "item_id",    null: false
+    t.integer  "action_id",  null: false
+    t.integer  "quantity",   null: false
     t.integer  "loc1"
     t.integer  "loc2"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "group_id"
+    t.integer  "group_id",   null: false
     t.integer  "count_id"
   end
 
@@ -123,7 +111,7 @@ ActiveRecord::Schema.define(version: 20150130201508) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "group_id"
+    t.integer  "group_id",                            null: false
     t.boolean  "admin"
   end
 

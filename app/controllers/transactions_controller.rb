@@ -4,7 +4,6 @@ class TransactionsController < ApplicationController
   
   def new
       @transaction = Transaction.new
-      @preroll = Preroll.owned(current_user)
       @items = Item.owned(current_user).active
       @otherlocs = Location.owned(current_user).active.where("id != ?", @preroll.loc1)
   end
@@ -51,10 +50,6 @@ class TransactionsController < ApplicationController
     
   def index
     @transactions = Transaction.owned(current_user).paginate(:page => params[:page], :per_page => 20)
-    if   Preroll.owned(current_user)
-      @preroll = Preroll.owned(current_user)
-        else @preroll = Preroll.new
-        end
   end
 
   def destroy

@@ -1,16 +1,6 @@
 <h1><%=current_user.group.name.possessive  %> Actions</h1>
  
 <% if @locations.any? && @items.any? %>
-<%= form_for @preroll do |f| %>
-  
-  <p>   
-    <%= f.date_field(:date, value: Date.today) %>
-    <%= f.collection_select(:action_id, Action.all, :id, :action) %>
-    <%= f.collection_select(:loc1, @locations, :id, :name) %>
-      <%= f.hidden_field :group_id, :value => current_user.group_id %>
-    <%= f.submit "Lez do it" %>
-  </p>
-
 <% end %>
 <% else %>
 Go make some items and locations!
