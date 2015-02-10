@@ -1,11 +1,9 @@
 class ShowsController < ApplicationController
   before_action :set_show, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
 
   def index
     @shows = Show.owned(current_user)
-    respond_with(@shows)
   end
 
   def show
@@ -15,7 +13,6 @@ class ShowsController < ApplicationController
   def new
     @show = Show.new
     @tours = Tour.where(:group_id => current_user.group_id)
-    respond_with(@show)
   end
 
   def edit
@@ -25,17 +22,14 @@ class ShowsController < ApplicationController
   def create
     @show = Show.new(show_params)
     @show.save
-    respond_with(@show)
   end
 
   def update
     @show.update(show_params)
-    respond_with(@show)
   end
 
   def destroy
     @show.destroy
-    respond_with(@show)
   end
 
   private

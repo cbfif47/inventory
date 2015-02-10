@@ -2,10 +2,10 @@ Rails.application.routes.draw do
   resources :tours
   resources :shows
   devise_for :users, :path_prefix => 'd'
+  get '/shows/:id/comp' => 'transactions#comp_new', :as => :comp_new
+  post 'shows/:id/comp' => 'transactions#comp_create', :as => :comp_create
   get '/shows/:id/counts' => 'counts#index', :as => :counts
   get '/shows/:id/:direction' => 'counts#new', :as => :count_in_out
-  get '/counts/:id/:thing' => 'transactions#count_action', :as => :count_action
-  post '/counts/:id/:thing' => 'transactions#single_create', :as => :single_create
   post 'shows/:id/counts' => 'counts#create', :as => :counts_create
   resources :counts
 

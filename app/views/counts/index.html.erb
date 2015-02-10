@@ -38,7 +38,7 @@
         </td>
         <td><%= c = count.find_comps > 0 ? count.find_comps : "-" %>
           <% if !count.find_out && @islatest %>
-            <%= link_to '+', count_action_path(count,"comp"), class: 'button button-primary' %>
+          <%= link_to '+', comp_new_path(count.show_id), class: 'button button-primary' %>
             <% end %>
         </td>
         <td><%= o = count.find_out ? count.find_out.quantity : "-" %>

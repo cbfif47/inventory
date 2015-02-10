@@ -8,14 +8,13 @@ class TransactionsController < ApplicationController
       @otherlocs = Location.owned(current_user).active.where("id != ?", @preroll.loc1)
   end
   
-  def count_action
+  def comp_new
     @transaction = Transaction.new
-    @count = Count.find(params[:id])
-    @primary = Location.primary(current_user)
-    @otherlocs = @primary.others(current_user)
+    @show = Show.find(params[:id])
+    @items = Item.where(id:(Item.counted_in(@show).pluck(:id) - Item.counted_out(@show).pluck(:id))).order(:name,:sub)      
   end
 
-  def single_create
+  def comp_create
     @count = Count.find(params[:id])
     @primary = Location.primary(current_user)
     @transaction = Transaction.new(transaction_params.merge(:count_id => @count.id, :item_id => @count.item_id, :date => @count.show.date, :loc1 => @primary.id, :loc2 => 1, :action_id => 1))
