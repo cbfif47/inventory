@@ -1,12 +1,17 @@
 <h1>Welcome to MrchBox</h1>
-<% if @locations.any? && @items.any? %>
-  <% if @shows.count > 1 %>
-<%= link_to "Latest show #{@shows.first.dateandvenue}", counts_path(@shows.first) %><br>
-<%= link_to "Latest show #{@shows.first.dateandvenue}", counts_path(@shows.first) %>
-  <% end %>
+<% if @outstanding.any? %>
+<%= "Show in progress at #{@latest.venue}!" %><br>
+<%= link_to 'View Counts', show_path(@latest), :class=> 'button' %>
+<%= link_to 'Comp an Item', new_transaction_path(show:@latest.id, type:1), class: 'button' %>
+<%= link_to 'Count Out', count_in_out_path(@latest, direction:"out"), :class=> 'button'  %>
 <% else %>
-Go make some items and locations!
+<%= link_to "#{@latest.date} #{@latest.venue}" , show_path(@latest), :class=> 'button' %>
+<%= link_to "#{@next.date} #{@next.venue}" , show_path(@next), :class=> 'button' %><br>
+<%= link_to "Other Shows" , shows_path, :class=> 'button' %>
+<%= link_to 'Non-Show Comp', new_transaction_path(type:1), class: 'button' %>
+<%= link_to 'Non-Show Sale', new_transaction_path(type:1), class: 'button' %>
+<%= link_to 'Add To Inventory', new_transaction_path(type:2), class: 'button' %>
+<%= link_to 'Transfer Stuff', new_transaction_path(type:3), class: 'button' %>
 <% end %>
-
 
 

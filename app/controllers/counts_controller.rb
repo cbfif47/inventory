@@ -26,7 +26,6 @@ class CountsController < ApplicationController
   end
 
   def create
-    @show = Show.find(params[:id])
     if Count.make_batch(params['count'], current_user)
       redirect_to session.delete(:return_to), :notice => 'Counts created!'
     else

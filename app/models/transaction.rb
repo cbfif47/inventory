@@ -3,6 +3,7 @@ class Transaction < ActiveRecord::Base
   belongs_to :item
   belongs_to :action
   belongs_to :count
+  belongs_to :show
   
   scope :active, -> {where("active = ?", true)}
     @primary = Location.where(:available => true).first #FIXME

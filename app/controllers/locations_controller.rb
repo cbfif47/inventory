@@ -39,10 +39,10 @@ class LocationsController < ApplicationController
                     other.update(:available => false)
                 end
                 else
-              unless @primary.any?
+            if @primary.blank?
                 @location.update(available: true)
-              end
             end
+        end
                 redirect_to action: 'index'
                     else
             render 'edit'

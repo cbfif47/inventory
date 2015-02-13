@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150204185255) do
+ActiveRecord::Schema.define(version: 20150213032643) do
 
   create_table "actions", force: true do |t|
     t.string   "action",     limit: 30, null: false
@@ -93,10 +93,12 @@ ActiveRecord::Schema.define(version: 20150204185255) do
     t.datetime "updated_at", null: false
     t.integer  "group_id",   null: false
     t.integer  "count_id"
+    t.integer  "show_id"
   end
 
   add_index "transactions", ["action_id"], name: "index_transactions_on_action_id"
   add_index "transactions", ["item_id"], name: "index_transactions_on_item_id"
+  add_index "transactions", ["show_id"], name: "index_transactions_on_show_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

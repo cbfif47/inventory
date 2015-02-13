@@ -3,10 +3,8 @@ class WelcomeController < ApplicationController
     @locations = Location.owned(current_user)
     @items = Item.owned(current_user)
     @shows = Show.hascounts(current_user)
-    if @shows.any?
-    @next = Show.owned(current_user).where("date > ?", @shows.first.date).order(:date).first
-    else
-      @next = @shows
-    end
+    @latest = Show.find_by(Show.joins(:counts).where(counts:{out:false}).maximum(:date))
+    @outstanding = Item.counted_in(@latest) - Item.counted_out(@latest)
+    @next = Show.where("date > ?", @latest.date).order(:date).first
   end
 end

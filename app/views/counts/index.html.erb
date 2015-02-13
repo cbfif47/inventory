@@ -4,12 +4,12 @@
 <% if @items.blank? %>
 <%= link_to 'Count In', '#', :class=> 'button button-disabled', data: { confirm: "No more items to count in!" } %>
 <% else %>
-<%= link_to 'Count In', count_in_out_path(@show, "in"), :class=> 'button' %>
+<%= link_to 'Count In', count_in_out_path(@show, direction:"in"), :class=> 'button' %>
 <% end %>
 <% if @needouts.blank? %>
 <%= link_to 'Count Out', '#',   :class=> 'button button-disabled', data: { confirm: "No items to count out!"} %>
 <% else %>
-<%= link_to 'Count Out', count_in_out_path(@show, "out"), :class=> 'button'  %>
+<%= link_to 'Count Out', count_in_out_path(@show, direction:"out"), :class=> 'button'  %>
 <% end %>
 <% end %>
 <table class="u-full-width">
@@ -38,7 +38,7 @@
         </td>
         <td><%= c = count.find_comps > 0 ? count.find_comps : "-" %>
           <% if !count.find_out && @islatest %>
-          <%= link_to '+', comp_new_path(count.show_id), class: 'button button-primary' %>
+          <%= link_to '+', new_transaction_path(show:@show.id, type:1), class: 'button button-primary' %>
             <% end %>
         </td>
         <td><%= o = count.find_out ? count.find_out.quantity : "-" %>
