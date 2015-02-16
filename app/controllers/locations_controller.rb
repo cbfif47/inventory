@@ -9,14 +9,14 @@ class LocationsController < ApplicationController
         @location = Location.new(location_params)
         @others = @location.others(current_user)
         if @location.save
-            if @location.available == true
+            if @location.primary == true
                 @others.each do |other|
-                    other.update(:available => false)
+                    other.update(:primary => false)
                 end
-                else
-              @primary = Location.primary(current_user) 
-              unless @primary.any?
-                @location.update(available: true)
+              else
+              @primary = Location.prime(current_user) 
+              if !@primary
+                @location.update(primary: true)
               end
             end
             redirect_to action: 'index'
@@ -34,13 +34,13 @@ class LocationsController < ApplicationController
   def update
     @others = @location.others(current_user)
         if @location.update(location_params)
-            if @location.available == true
+            if @location.primary == true
                 @others.each do |other|
-                    other.update(:available => false)
+                    other.update(:primary => false)
                 end
                 else
-            if @primary.blank?
-                @location.update(available: true)
+            if @primary
+                @location.update(primary: true)
             end
         end
                 redirect_to action: 'index'
@@ -59,14 +59,14 @@ class LocationsController < ApplicationController
     
   private
     def location_params
-        params.require(:location).permit(:name,:available,:active).merge(group_id: current_user.group_id)
+        params.require(:location).permit(:name,:primary,:active).merge(group_id: current_user.group_id)
     end
     
   
   def set_location
     @location = Location.find(params[:id])
     check_user(@location)
-    @primary = Location.primary(current_user)
+    @primary = Location.prime(current_user)
   end
   
   def set_others

@@ -9,7 +9,7 @@ class ToursController < ApplicationController
   end
 
   def show
-    respond_with(@tour)
+    @shows = Show.owned(current_user).ontour(@tour)
   end
 
   def new
@@ -43,6 +43,6 @@ class ToursController < ApplicationController
     end
 
     def tour_params
-      params.require(:tour).permit(:name, :current).merge(group_id: current_user.group_id)
+      params.require(:tour).permit(:name).merge(group_id: current_user.group_id)
     end
 end

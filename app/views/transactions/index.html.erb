@@ -1,13 +1,4 @@
 <h1><%=current_user.group.name.possessive  %> Actions</h1>
-<% if @locations.any? && @items.any? %>
-<%= form_tag(new_transaction_path, :method => "get", id: "new-trans-form", enforce_utf8:false) do %>
-<%= number_field_tag :action_id, params[:action_id] %>
-  <%= submit_tag "Search", :name => nil %>
-<% end %>
-
-<% else %>
-Go make some items and locations!
-<% end %>
 <%= will_paginate @transactions %>
 <table class="u-full-width">
   <thead>
@@ -28,13 +19,9 @@ Go make some items and locations!
       <td><%= transaction.date.strftime("%-m/%-d/%y") %></td>
       <td><%= transaction.item_id ? transaction.item.name_with_sub : "" %></td>
       <td><%= transaction.action_id ? transaction.action.action : "" %></td>
-      <% if transaction.action_id == 1 %>
-<td class="neg">
-<% elsif transaction.action_id == 2 %>
-  <td class="pos">
-<% elsif transaction.action_id == 4 && transaction.loc1 == 1 %> 
+<% if !transaction.loc1 %> 
 <td class="pos">
-<% elsif transaction.action_id == 4 && transaction.loc2 == 1 %> 
+<% elsif !transaction.loc2 %> 
 <td class="neg">
     <% else %>
   <td>

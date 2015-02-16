@@ -1,0 +1,38 @@
+<%= form_for @transaction do |f| %>
+  <% if @transaction.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@transaction.errors.count, "error") %> prohibited
+      this transaction from being saved:</h2>
+    <ul>
+    <% @transaction.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+<h1><%= "#{@action.action} Something" %></h1>
+  <p>    
+    <% if @action.id == 5 %>           
+      <%= f.hidden_field :loc1, :value => @primary.id %>
+    <%= "Comp from #{@primary.name}" %>
+    <% elsif @action.id == 3 %>
+      <%= f.hidden_field :loc2, :value => @primary.id %>
+    <%= "Transfer to #{@primary.name} from:" %>
+    <%= f.collection_select(:loc1, @others, :id, :name, {:selected => @primary.id}) %>
+
+    <% end %>
+    <%= f.label :item_id %>
+    <%= f.collection_select(:item_id, @items, :id, :name_with_sub) %>
+    <%= f.label :quantity %>
+    <%= f.number_field :quantity %>
+    <%= f.hidden_field :date, :value => @show.date %>
+    <%= f.hidden_field :action_id, :value => params[:type] %>
+    <%= f.hidden_field :show_id, :value => params[:show] %><br>
+    <%= "Related to show at #{@show.venue}" %>
+  </p>
+  <p>
+    <%= f.submit "#{@action.action} it" %>
+  </p>
+<% end %>
+
+ 

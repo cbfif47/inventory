@@ -7,7 +7,13 @@ class ShowsController < ApplicationController
   end
 
   def show
-    redirect_to counts_path(@show.id)
+    @show = Show.find(params[:id])
+    check_user(@show)
+    @countins = Count.where(show_id:@show.id, out:false).owned(current_user).includes(:item)
+    @mostrecentcount = Count.owned(current_user).order(id: :desc).first
+    @islatest = @mostrecentcount.present? ? @mostrecentcount.show.date <= @show.date : true
+    @needins = Item.owned(current_user).active.pluck(:id) - Item.counted_in(@show).pluck(:id)
+    @needouts = Item.counted_in(@show).pluck(:id) - Item.counted_out(@show).pluck(:id)
   end
 
   def new
@@ -22,14 +28,17 @@ class ShowsController < ApplicationController
   def create
     @show = Show.new(show_params)
     @show.save
+    redirect_to action: 'index'
   end
 
   def update
     @show.update(show_params)
+    redirect_to show_path(@show)
   end
 
   def destroy
     @show.destroy
+    redirect_to action:"index"
   end
 
   private

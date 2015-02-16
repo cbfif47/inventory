@@ -6,7 +6,6 @@ class Transaction < ActiveRecord::Base
   belongs_to :show
   
   scope :active, -> {where("active = ?", true)}
-    @primary = Location.where(:available => true).first #FIXME
     
   
     def net
@@ -62,10 +61,10 @@ class Transaction < ActiveRecord::Base
         if k['quantity'] != ''
           if k['action_id'] == '4' #adjustment logic
             if k['quantity'].to_i > k['oldquant'].to_i
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['quantity'].to_i-k['oldquant'].to_i), :loc1 => 1, :loc2 => k['loc1'], :group_id => user.group_id, :count_id => count)
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['quantity'].to_i-k['oldquant'].to_i), :loc2 => k['loc1'], :group_id => user.group_id, :count_id => count)
               @transaction.save
             elsif k['quantity'].to_i < k['oldquant'].to_i
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :loc2 => 1, :group_id => user.group_id, :count_id => count)
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :group_id => user.group_id, :count_id => count)
               @transaction.save
             else
             end

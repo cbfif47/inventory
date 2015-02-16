@@ -5,15 +5,9 @@
   <%= @tour.name %>
 </p>
 
-<p>
-  <strong>Current:</strong>
-  <%= @tour.current %>
-</p>
-
-<p>
-  <strong>Group:</strong>
-  <%= @tour.group %>
-</p>
+<% @shows.each do |show| %>
+<%= link_to "#{show.date.to_s(:short)} #{show.venue}", show_path(show) %><br>
+<% end %>
 
 <%= link_to 'Edit', edit_tour_path(@tour) %> |
 <%= link_to 'Back', tours_path %>

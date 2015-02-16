@@ -12,13 +12,22 @@
   <% end %>
 <h1><%= "#{@action.action} Something" %></h1>
   <p>
+    
     <%= f.label :date %>
     <%= f.date_field :date, :value => @date %>
-    <%= f.label 'Location' %>
     <% if @action.impact == -1 %>
-    <%= f.collection_select(:loc1, @locations, :id, :name, {:selected => @primary.id}) %>
+      <%= f.label "#{@action.action} from" %>
+      <%= f.collection_select(:loc1, @locations, :id, :name, {:selected => @primary.id}) %>
     <% elsif @action.impact == 1 %>
+      <%= f.label "#{@action.action} to" %>
+      <%= f.collection_select(:loc2, @locations, :id, :name, {:selected => @primary.id}) %>
+    <% elsif @action.id == 3 %>
+      <%= f.label "#{@action.action} from" %>
+      <%= f.collection_select(:loc1, @locations, :id, :name, {:selected => @primary.id}) %>
+      <%= f.label "#{@action.action} to" %>
     <%= f.collection_select(:loc2, @locations, :id, :name, {:selected => @primary.id}) %>
+    <% else %> 
+      <%= f.collection_select(:loc1, @locations, :id, :name, {:selected => @primary.id}) %>
     <% end %>
     <%= f.label :item_id %>
     <%= f.collection_select(:item_id, @items, :id, :name_with_sub) %>
@@ -26,7 +35,7 @@
     <%= f.number_field :quantity %>
     <%= f.hidden_field :action_id, :value => params[:type] %>
     <%= f.hidden_field :show_id, :value => params[:show] %><br>
-    <%= @show.blank? ? "Unrelated to a show" : "Related to show at #{@show.venue}" %>
+    <%= @show.blank? ? "" : "Related to show at #{@show.venue}" %>
   </p>
   <p>
     <%= f.submit "#{@action.action} it" %>

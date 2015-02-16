@@ -23,9 +23,6 @@ class Count < ActiveRecord::Base
     Count.find_by(item_id: self.item_id, show_id: self.show_id, out: true)
   end
   
-  def find_comps
-    Transaction.where(count_id: self.id, action:1).sum(:quantity)
-  end
 
 end
 

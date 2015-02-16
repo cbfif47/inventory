@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20150213032643) do
 
   create_table "locations", force: true do |t|
     t.string   "name",       limit: 50
-    t.boolean  "available",             null: false
+    t.boolean  "primary",               null: false
     t.boolean  "active",                null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
@@ -74,7 +74,6 @@ ActiveRecord::Schema.define(version: 20150213032643) do
 
   create_table "tours", force: true do |t|
     t.string   "name",       limit: 50, null: false
-    t.boolean  "current"
     t.integer  "group_id",              null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false

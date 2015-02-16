@@ -1,17 +1,32 @@
 <h1>Welcome to MrchBox</h1>
-<% if @outstanding.any? %>
-<%= "Show in progress at #{@latest.venue}!" %><br>
-<%= link_to 'View Counts', show_path(@latest), :class=> 'button' %>
-<%= link_to 'Comp an Item', new_transaction_path(show:@latest.id, type:1), class: 'button' %>
-<%= link_to 'Count Out', count_in_out_path(@latest, direction:"out"), :class=> 'button'  %>
-<% else %>
-<%= link_to "#{@latest.date} #{@latest.venue}" , show_path(@latest), :class=> 'button' %>
-<%= link_to "#{@next.date} #{@next.venue}" , show_path(@next), :class=> 'button' %><br>
-<%= link_to "Other Shows" , shows_path, :class=> 'button' %>
-<%= link_to 'Non-Show Comp', new_transaction_path(type:1), class: 'button' %>
-<%= link_to 'Non-Show Sale', new_transaction_path(type:1), class: 'button' %>
-<%= link_to 'Add To Inventory', new_transaction_path(type:2), class: 'button' %>
-<%= link_to 'Transfer Stuff', new_transaction_path(type:3), class: 'button' %>
+
+<% if @items == 0 %>
+<%= link_to 'Setup Items', new_item_path, :class=> 'button' %>
 <% end %>
 
+<% if @locations == 0 %>
+<%= link_to 'Setup Locations', new_location_path, :class=> 'button' %>
+<% end %>
+
+<% if @tours == 0 %>
+  <%= link_to 'Setup a Tour', new_tour_path, :class=> 'button' %>
+  <% elsif @shows == 0 %>
+  <%= link_to 'Setup Shows', new_show_path, :class=> 'button' %>
+  <% else %>
+    <% if @outstanding.any? %>
+      <%= "Show in progress at #{@latest.venue}!" %><br>
+      <%= link_to 'View Show', show_path(@latest), :class=> 'button' %>
+      <%= link_to 'Comp an Item', new_transaction_path(show:@latest.id, type:5), class: 'button' %>
+      <%= link_to "Transfer to #{@primary.name}", new_transaction_path(show:@latest.id, type:3), class: 'button' %>
+      <%= link_to 'Count Out', count_in_out_path(@latest, direction:"out"), :class=> 'button'  %>
+    <% elsif @items > 0 && @locations > 0 %>
+      <%= @latest ? (link_to "Last Show: #{@latest.venue}" , show_path(@latest), :class=> 'button') : "" %>
+      <%= link_to "Next Show: #{@next.venue}" , show_path(@next), :class=> 'button' %><br>
+      <%= link_to "All Shows" , shows_path, :class=> 'button' %>
+      <%= link_to 'Non-Show Sale', new_transaction_path(type:1), class: 'button' %>
+      <%= link_to 'Non-Show Comp', new_transaction_path(type:5), class: 'button' %>
+      <%= link_to 'Add To Inventory', new_transaction_path(type:2), class: 'button' %>
+      <%= link_to 'Transfer Stuff', new_transaction_path(type:3), class: 'button' %>
+    <% end %>
+<% end %>
 

@@ -1,2 +1,7 @@
-
-  <%= render 'compform' %>
+<% if params[:show] %>
+  <%= render 'showform' %>
+<% elsif params[:type] == '4' %>
+  <%= render 'adjustform' %>
+<% else %>
+  <%= render 'nonshowform' %>
+<% end %>

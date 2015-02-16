@@ -2,8 +2,8 @@ class Location < ActiveRecord::Base
     include Ownable
     scope :active, -> {where("active = ?", true)}
   
-  def self.primary(user)
-    self.where("available = ? AND group_id = ?", true, user.group_id).first
+  def self.prime(user)
+    self.where(primary:true,group_id:user.group_id).first
   end
   
   def others(user)

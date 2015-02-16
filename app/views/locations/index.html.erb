@@ -13,7 +13,7 @@
   <% @locations.each do |location| %>
     <tr>
       <td><%= location.name %></td>
-      <td><%= radio_button_tag 'primary', '1', location.available, :disabled => true %></td>
+      <td><%= radio_button_tag 'primary', '1', location.primary, :disabled => true %></td>
       <td><%= check_box_tag 'active', '1', location.active, :disabled => true %></td>
       <td><%= link_to 'Edit', edit_location_path(location) %></td>
     </tr>

@@ -1,13 +1,10 @@
 Rails.application.routes.draw do
   resources :tours  
   devise_for :users, :path_prefix => 'd'
-  get '/shows/:id/comp' => 'transactions#comp_new', :as => :comp_new
-  post '/shows/:id/comp' => 'transactions#comp_create', :as => :comp_create
-  get '/shows/:id' => 'counts#index', :as => :show
+  resources :shows
   get '/shows/:id/count' => 'counts#new', :as => :count_in_out
   post 'shows/:id/count' => 'counts#create', :as => :counts_create
   resources :counts
-  resources :shows
   resources :users  
   get 'welcome/index'
  root 'welcome#index'

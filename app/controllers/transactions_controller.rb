@@ -4,26 +4,37 @@ class TransactionsController < ApplicationController
   
   def new
       @transaction = Transaction.new
-      @items = Item.owned(current_user).active
-      @locations = Location.owned(current_user).active
-      @primary = Location.primary(current_user)
+      @primary = Location.prime(current_user)
       @action = Action.find(params[:type])
       if params[:show]
+        if params[:type] == '3' || params[:type] == '5'
         @show = Show.find(params[:show])
-        @date = @show.date        
+        check_user(@show)
+        @others = @primary.others(current_user)
+        @items = Item.counted_in(@show) - Item.counted_out(@show)
+        else
+          redirect_to new_transaction_path(type:params[:type])
+        end
       else
         @date = Date.today
+        @items = Item.owned(current_user).active     
+        @locations = Location.owned(current_user).active
       end
   end
   
 
   def create
   @transaction = Transaction.new(transaction_params)
+    @transaction.show ? check_user(Show.find(@transaction.show_id)) : ""
+    @transaction.count ? check_user(Count.find(@transaction.count_id)) : ""
+    @transaction.loc1 ? check_user(Location.find(@transaction.loc1)) : ""
+    @transaction.loc2 ? check_user(Location.find(@transaction.loc2)) : ""
+    check_user(Item.find(@transaction.item_id))
     if @transaction.save
         if @transaction.show
-          redirect_to show_path(@transaction.show)
+          redirect_to show_path(@transaction.show), notice: "Transaction Saved"
         else
-        redirect_to action: 'index'
+          redirect_to root_path, notice: 'Transaction Saved'
         end
       else
             render 'new'

@@ -1,22 +1,22 @@
 class CountsController < ApplicationController
   before_action :set_count, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @show = Show.find(params[:id])
-    check_user(@show)
-    @counts = Count.where(show_id:@show.id, out:false).owned(current_user).includes(:item)
-    @mostrecentcount = Count.owned(current_user).order(id: :desc).first
-    @islatest = @mostrecentcount.present? ? @mostrecentcount.show.date <= @show.date : true
-    @items = Item.owned(current_user).active.pluck(:id) - Item.counted_in(@show).pluck(:id)
-    @needouts = Item.counted_in(@show).pluck(:id) - Item.counted_out(@show).pluck(:id)
-  end
+#  def index
+#    @show = Show.find(params[:id])
+#    check_user(@show)
+#    @counts = Count.where(show_id:@show.id, out:false).owned(current_user).includes(:item)
+#    @mostrecentcount = Count.owned(current_user).order(id: :desc).first
+#    @islatest = @mostrecentcount.present? ? @mostrecentcount.show.date <= @show.date : true
+#    @items = Item.owned(current_user).active.pluck(:id) - Item.counted_in(@show).pluck(:id)
+#    @needouts = Item.counted_in(@show).pluck(:id) - Item.counted_out(@show).pluck(:id)
+#  end
 
   def new
       @show = Show.find(params[:id])
       check_user(@show)
       session[:return_to] = request.referer
       @count = Count.new
-      @primary = Location.primary(current_user)
+      @primary = Location.prime(current_user)
     if params[:direction] == "in"
       @items = Item.where(id:(Item.owned(current_user).active.pluck(:id) - Item.counted_in(@show).pluck(:id))).order(:name,:sub)
     else
