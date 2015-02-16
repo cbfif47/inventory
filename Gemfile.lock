@@ -28,8 +28,14 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    autoprefixer-rails (5.1.5)
+      execjs
+      json
     bcrypt (3.1.9)
     bcrypt (3.1.9-x86-mingw32)
+    bootstrap-sass (3.3.3)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.2.19)
     builder (3.2.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -123,12 +129,16 @@ GEM
     warden (1.2.3)
       rack (>= 1.0)
     will_paginate (3.0.7)
+    will_paginate-bootstrap (1.0.1)
+      will_paginate (>= 3.0.3)
 
 PLATFORMS
   ruby
   x86-mingw32
 
 DEPENDENCIES
+  autoprefixer-rails
+  bootstrap-sass (~> 3.3.3)
   coffee-rails (~> 4.0.0)
   devise
   jbuilder (~> 2.0)
@@ -136,10 +146,10 @@ DEPENDENCIES
   pg
   possessive
   rails (= 4.1.8)
-  sass-rails (~> 4.0.3)
+  sass-rails (>= 3.2)
   sdoc (~> 0.4.0)
   sqlite3
   turbolinks
   tzinfo-data
   uglifier (>= 1.3.0)
-  will_paginate
+  will_paginate-bootstrap

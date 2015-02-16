@@ -2,15 +2,15 @@
 <%= @show.date %> at <%= @show.venue %><br>
 <% if @islatest %>
   <% if @needins.blank? %>
-  <%= link_to 'Count In', '#', :class=> 'button button-disabled', data: { confirm: "No more items to count in!" } %>
+  <%= link_to 'Count In', '#', :class=> 'btn btn-primary', data: { confirm: "No more items to count in!" } %>
   <% else %>
-  <%= link_to 'Count In', count_in_out_path(@show, direction:"in"), :class=> 'button' %>
+  <%= link_to 'Count In', count_in_out_path(@show, direction:"in"), :class=> 'btn btn-primary' %>
   <% end %>
   <% if @needouts.blank? %>
-  <%= link_to 'Count Out', '#',   :class=> 'button button-disabled', data: { confirm: "No items to count out!"} %>
+  <%= link_to 'Count Out', '#',   :class=> 'btn btn-primary', data: { confirm: "No items to count out!"} %>
   <% else %>
-  <%= link_to 'Count Out', count_in_out_path(@show, direction:"out"), :class=> 'button'  %>
-  <%= link_to 'Comp Item', new_transaction_path(show:@show.id,type:5), class: 'button' %>
+  <%= link_to 'Count Out', count_in_out_path(@show, direction:"out"), :class=> 'btn btn-primary'  %>
+  <%= link_to 'Comp Item', new_transaction_path(show:@show.id,type:5), class: 'btn btn-primary' %>
   <% end %>
 <% end %>
 <table class="u-full-width">

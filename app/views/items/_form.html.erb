@@ -10,18 +10,28 @@
     </ul>
   </div>
   <% end %>
-  <p>
-    <%= f.text_field :name, :placeholder => 'Name'%><br>
-    <%= f.text_field :sub, :placeholder => 'Size/Media' %><br>
-    <%= f.number_field :rate, :placeholder => '$' %><br>
-    <%= f.label :soft %>
-    <%= f.check_box :soft %>
-    <%= f.label :active %>
-    <%= f.check_box :active, checked: true %>
-  </p>
+<div class="row">
+<div class="col-md-2 col-md-offset-5">
+<form role="form">
+  <div class="form-group">
+    <%= f.text_field :name, :placeholder => 'Name', class: 'form-control'%>
+    <%= f.text_field :sub, :placeholder => 'Size/Media', class: 'form-control' %>
+    <%= f.number_field :rate, :placeholder => '$', class: 'form-control' %>
+  </div>
+    <div class="form-group">
+    <%= f.label :soft, class:'col-sm-2 control-label' %>
+    <%= f.check_box :soft, class: 'checkbox-inline' %>
+  </div>
+    <div class="form-group">
+    <%= f.label :active, class:'col-sm-2 control-label' %>
+    <%= f.check_box :active, checked: true, class: "checkbox-inline" %>
+  </div>
 
  
   <p>
-    <%= f.submit "Add to my box"%>
+    <%= f.submit "Add to my box", class:"btn btn-primary"%>
   </p>
 <% end %>
+</form>
+  </div>
+</div>

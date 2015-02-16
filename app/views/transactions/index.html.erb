@@ -1,6 +1,6 @@
 <h1><%=current_user.group.name.possessive  %> Actions</h1>
-<%= will_paginate @transactions %>
-<table class="u-full-width">
+<%= will_paginate @transactions, renderer: BootstrapPagination::Rails %>
+<table class="table table-striped">
   <thead>
   <tr>
     <th>Date</th>
@@ -30,8 +30,8 @@
       <td><%= transaction.loc1 ? Location.find(transaction.loc1).name : "" %></td>
       <td><%= transaction.loc2 ?  Location.find(transaction.loc2).name : "" %></td>
       <td><%= transaction.show_id %></td>
-      <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
-      <td><%= link_to 'Destroy', transaction_path(transaction), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      <td><%= link_to 'Edit', edit_transaction_path(transaction), class:"btn btn-warning" %></td>
+      <td><%= link_to 'Destroy', transaction_path(transaction), method: :delete, data: {confirm: 'Are you sure?'}, class:"btn btn-danger" %></td>
     </tr>
   <% end %>
   </tbody>
