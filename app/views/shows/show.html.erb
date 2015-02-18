@@ -13,7 +13,8 @@
   <%= link_to 'Comp Item', new_transaction_path(show:@show.id,type:5), class: 'btn btn-primary' %>
   <% end %>
 <% end %>
-<table class="u-full-width">
+<div class="table-reponsive">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Item</th>
@@ -63,5 +64,5 @@
     <tr><td></td><td></td><td></td><td></td><td></td><td>Total</td><td>$<%= total %></td></tr>
   </tbody>
 </table>
-
+</div>
 <br>

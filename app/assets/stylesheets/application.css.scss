@@ -11,9 +11,16 @@ $btn-default-color: #fff;
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import url(http://fonts.googleapis.com/css?family=Oxygen:400,300,700);
-body {
+td {
   text-align:center;
 }
 th {
   text-align:center;
+}
+.no-transition {
+  -webkit-transition: height 0.05s;
+  -moz-transition: height 0.05s;
+  -ms-transition: height 0.05s;
+  -o-transition: height 0.05s;
+  transition: height 0.05s;
 }

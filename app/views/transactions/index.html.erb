@@ -1,5 +1,6 @@
 <h1><%=current_user.group.name.possessive  %> Actions</h1>
 <%= will_paginate @transactions, renderer: BootstrapPagination::Rails %>
+<div class="table-responsive">
 <table class="table table-striped">
   <thead>
   <tr>
@@ -36,6 +37,7 @@
   <% end %>
   </tbody>
 </table>
+</div>
 <br>
 
 

@@ -20,13 +20,12 @@
       <%= link_to "Transfer to #{@primary.name}", new_transaction_path(show:@latest.id, type:3), class: 'button' %>
       <%= link_to 'Count Out', count_in_out_path(@latest, direction:"out"), :class=> 'button'  %>
     <% elsif @items > 0 && @locations > 0 %>
-<%= @latest ? (link_to "Last Show: #{@latest.venue}" , show_path(@latest), :class=> 'btn btn-primary') : "" %>
-      <%= link_to "Next Show: #{@next.venue}" , show_path(@next), :class=> 'btn btn-primary' %><br>
-<%= link_to "All Shows" , shows_path, :class=> 'btn btn-default' %>
+<%= @latest ? (link_to "Last Show: #{@latest.venue}" , show_path(@latest), :class=> 'btn btn-primary btn-lg') : "" %>
+<%= next_show %><br>
+<%= link_to "All Shows", shows_path, :class=> 'btn btn-default' %>
       <%= link_to 'Non-Show Sale', new_transaction_path(type:1), class: 'btn btn-default' %>
       <%= link_to 'Non-Show Comp', new_transaction_path(type:5), class: 'btn btn-default' %>
       <%= link_to 'Add To Inventory', new_transaction_path(type:2), class: 'btn btn-default' %>
       <%= link_to 'Transfer Stuff', new_transaction_path(type:3), class: 'btn btn-default' %>
     <% end %>
 <% end %>
-

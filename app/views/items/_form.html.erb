@@ -11,26 +11,25 @@
   </div>
   <% end %>
 <div class="row">
-<div class="col-md-2 col-md-offset-5">
+<div class="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
 <form role="form">
   <div class="form-group">
-    <%= f.text_field :name, :placeholder => 'Name', class: 'form-control'%>
-    <%= f.text_field :sub, :placeholder => 'Size/Media', class: 'form-control' %>
-    <%= f.number_field :rate, :placeholder => '$', class: 'form-control' %>
+    <%= f.text_field :name, :placeholder => 'Name', class: 'form-control input-lg'%>
+    <%= f.text_field :sub, :placeholder => 'Size/Media', class: 'form-control input-lg' %>
+    <%= f.number_field :rate, :placeholder => '$', class: 'form-control input-lg' %>
   </div>
     <div class="form-group">
-    <%= f.label :soft, class:'col-sm-2 control-label' %>
-    <%= f.check_box :soft, class: 'checkbox-inline' %>
-  </div>
-    <div class="form-group">
-    <%= f.label :active, class:'col-sm-2 control-label' %>
+      <%= f.label :soft, class:'control-label' %> 
+    <%= f.check_box :soft, class: 'checkbox-inline' %> 
+
+      <%= f.label :active, class:'control-label' %> 
     <%= f.check_box :active, checked: true, class: "checkbox-inline" %>
   </div>
 
  
-  <p>
+  <div class="form-group">
     <%= f.submit "Add to my box", class:"btn btn-primary"%>
-  </p>
+  </div>
 <% end %>
 </form>
   </div>
