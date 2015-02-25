@@ -1,31 +1,16 @@
 Rails.application.routes.draw do
-  resources :tours  
   devise_for :users, :path_prefix => 'd'
-  resources :shows
-  get '/shows/:id/count' => 'counts#new', :as => :count_in_out
-  post 'shows/:id/count' => 'counts#create', :as => :counts_create
-  resources :counts
-  resources :users  
+  resources :tours, :users, :locations, :items, :groups, :transactions
+  resources :shows do
+    resources :counts, except:[:index, :show, :edit]
+  end
+  post '/shows/:id' => 'counts#create' #I can't seem to get the batch form working without this
+  post 'notes/' => 'notes#create' #this is the endpoint for cloudmailin to send show notes
+  get 'reports' => 'reports#index'
+  get 'reports/summary' => 'reports#summary', :as => :summary_report
+  get 'reports/by_sub' => 'reports#by_sub', :as => :by_sub_report
   get 'welcome/index'
- root 'welcome#index'
-  get 'locations/new'
-
-  get 'locations/index'
-
-  get 'locations/edit'
-    get 'transactions/all/edit' => 'transactions#edit_all', :as => :edit_all
-    put 'transactions/all' => 'transactions#update_all', :as => :update_all
-    get 'transactions/batch/new' => 'transactions#new_batch', :as => :new_batch
-    put 'transactions/batch' => 'transactions#create_batch', :as => :create_batch  
-    resources :locations
-    resources :items
-    resources :transactions
-  resources :groups
-    get 'reports/index', :as => :reports
-    get 'reports' => 'reports#index'
-    get 'reports/summary' => 'reports#summary', :as => :summary_report
-    get 'reports/by_sub' => 'reports#by_sub', :as => :by_sub_report
- 
+  root 'welcome#index' 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -9,7 +9,7 @@ class TransactionsController < ApplicationController
       if params[:show]
         if params[:type] == '3' || params[:type] == '5'
         @show = Show.find(params[:show])
-        check_user(@show)
+          check_user(@show.tour.group_id)
         @others = @primary.others(current_user)
         @items = Item.counted_in(@show) - Item.counted_out(@show)
         else
@@ -24,12 +24,11 @@ class TransactionsController < ApplicationController
   
 
   def create
-  @transaction = Transaction.new(transaction_params)
-    @transaction.show ? check_user(Show.find(@transaction.show_id)) : ""
-    @transaction.count ? check_user(Count.find(@transaction.count_id)) : ""
-    @transaction.loc1 ? check_user(Location.find(@transaction.loc1)) : ""
-    @transaction.loc2 ? check_user(Location.find(@transaction.loc2)) : ""
-    check_user(Item.find(@transaction.item_id))
+    @transaction = Transaction.new(transaction_params)
+    @transaction.show ? check_user(@transaction.show.tour.group_id) : ""
+    @transaction.loc1 ? check_user(Location.find(@transaction.loc1).group_id) : ""
+    @transaction.loc2 ? check_user(Location.find(@transaction.loc2).group_id) : ""
+    check_user(@transaction.item.group_id)
     if @transaction.save
         if @transaction.show
           redirect_to show_path(@transaction.show), notice: "Transaction Saved"
@@ -68,13 +67,13 @@ class TransactionsController < ApplicationController
     
 private
   def transaction_params
-    params.require(:transaction).permit(:date,:item_id,:action_id,:quantity,:loc1,:loc2,:show_id).merge(group_id: current_user.group_id)
+    params.require(:transaction).permit(:date,:item_id,:action_id,:quantity,:loc1,:loc2,:show_id)
   end
          
  
   def set_trans
     @transaction = Transaction.find(params[:id])
-    check_user(@transaction)
+    check_user(@transaction.item.group_id)
   end
   
   def set_items_locs

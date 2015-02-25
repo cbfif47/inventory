@@ -1,4 +1,4 @@
-<h1><%=current_user.group.name.possessive  %> Items</h1>
+<h1>Items</h1>
  
 <table class="table table-striped">
   <thead>
@@ -6,7 +6,6 @@
     <th>Name</th>
     <th>Size/Media</th>
     <th>Rate</th>
-    <th>Active</th>
     <th>Soft</th>
     <th></th>    
   </tr>
@@ -17,7 +16,6 @@
       <td><%= item.name %></td>
       <td><%= item.sub %></td>
       <td><%= item.rate %></td>
-      <td><%= check_box_tag 'active', '1', item.active, :disabled => true %></td>
       <td><%= check_box_tag 'soft', '1', item.soft, :disabled => true %></td>
       <td><%= link_to 'Edit', edit_item_path(item) %></td>
 
@@ -25,4 +23,45 @@
   <% end %>
     </tbody>
 </table>
-<%= link_to 'Add New Item', new_item_path %>
+
+<%= link_to 'Add New Item', new_item_path, class:"btn btn-default" %><br>
+<% if @inactives.present? %>
+<br><div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+<div >
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Show Old, Inactive Items
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        <table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Size/Media</th>
+    <th>Rate</th>
+    <th>Soft</th>
+    <th></th>    
+  </tr>
+ </thead>
+  <tbody>
+    <% @inactives.each do |item| %>
+    <tr>
+      <td><%= item.name %></td>
+      <td><%= item.sub %></td>
+      <td><%= item.rate %></td>
+      <td><%= check_box_tag 'soft', '1', item.soft, :disabled => true %></td>
+      <td><%= link_to 'Edit', edit_item_path(item) %></td>
+
+    </tr>
+  <% end %>
+    </tbody>
+</table>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213032643) do
+ActiveRecord::Schema.define(version: 20150221011621) do
 
   create_table "actions", force: true do |t|
     t.string   "action",     limit: 30, null: false
@@ -28,10 +28,8 @@ ActiveRecord::Schema.define(version: 20150213032643) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "rate"
-    t.integer  "group_id",   null: false
   end
 
-  add_index "counts", ["group_id"], name: "index_counts_on_group_id"
   add_index "counts", ["item_id"], name: "index_counts_on_item_id"
   add_index "counts", ["show_id"], name: "index_counts_on_show_id"
 
@@ -40,6 +38,17 @@ ActiveRecord::Schema.define(version: 20150213032643) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
+
+  create_table "guests", force: true do |t|
+    t.string   "name"
+    t.integer  "plus"
+    t.string   "special"
+    t.integer  "show_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "guests", ["show_id"], name: "index_guests_on_show_id"
 
   create_table "items", force: true do |t|
     t.string   "name",       limit: 50, null: false
@@ -66,8 +75,9 @@ ActiveRecord::Schema.define(version: 20150213032643) do
     t.string   "venue",      limit: 50, null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
-    t.integer  "group_id",              null: false
     t.integer  "tour_id",               null: false
+    t.text     "notes"
+    t.string   "city"
   end
 
   add_index "shows", ["tour_id"], name: "index_shows_on_tour_id"
@@ -90,7 +100,6 @@ ActiveRecord::Schema.define(version: 20150213032643) do
     t.integer  "loc2"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "group_id",   null: false
     t.integer  "count_id"
     t.integer  "show_id"
   end

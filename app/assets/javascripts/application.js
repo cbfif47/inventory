@@ -14,5 +14,14 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require cocoon
 //= require_tree .
+var ready = function () {
+$('[rel=tooltip]').tooltip({ placement : 'right',
+                           container: 'body',
+                            trigger: 'focus'});
+  $('[rel=popover]').popover({placement: 'bottom', trigger:'click', html: true});
+};
 
+$(document).ready(ready);
+$(document).on('page:load', ready);

@@ -1,0 +1,5 @@
+<% @guests.each do |guest| %>
+<%= guest.plus ? "#{guest.name} +#{guest.plus} #{guest.special}" : "#{guest.name} #{guest.special}"%><br>
+<% end %>
+<br>
+<%= link_to "Edit Guestlist", edit_show_path(component:"guests") %>

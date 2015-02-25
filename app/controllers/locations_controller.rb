@@ -65,7 +65,7 @@ class LocationsController < ApplicationController
   
   def set_location
     @location = Location.find(params[:id])
-    check_user(@location)
+    check_user(@location.group_id)
     @primary = Location.prime(current_user)
   end
   

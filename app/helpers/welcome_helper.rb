@@ -1,11 +1,15 @@
 module WelcomeHelper
   
-  def next_show
-    if @next
-      link_to "Next Show: #{@next.venue}" , show_path(@next), :class=> 'btn btn-primary'
-    else
-      "No Upcoming Shows"
+  def showtime_link(show, text)
+    if show
+      link_to "#{text} Show: #{show.venue}" , show_path(show), :class=> 'btn btn-primary'
     end
   end
   
+  def setup_links(object,text,place)
+    if object == 0
+      link_to "Setup #{text}", place, :class=> 'btn btn-primary'
+    end
+  end
+
 end

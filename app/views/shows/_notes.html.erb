@@ -1,0 +1,21 @@
+  <!-- Button trigger modal -->
+  <button class="btn btn-primary" data-toggle="modal" data-target="#notes">
+    View notes
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="notes" tabindex="-1" role="dialog" aria-labelledby="todo--label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="todo--label">Notes <%= link_to '  <span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_show_path(component:"notes") %></h4>
+        </div>
+        <div class="modal-body">
+          <%= simple_format(@show.notes) %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>   

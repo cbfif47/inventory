@@ -1,6 +1,9 @@
-<h1>Editing show</h1>
-
+<% if params[:component] == "guests" %>
+<%= render 'guest_form' %>
+<% elsif params[:component] == "notes" %>
+<%= render 'notes_form' %>
+<% else %>
 <%= render 'form' %>
-
+<% end %>
 <%= link_to 'Show', @show %> |
 <%= link_to 'Back', shows_path %>

@@ -15,18 +15,14 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
-<%= f.fields_for :shows do|ff| %>
-<div class="duplicatable_nested_form">
+<%= f.fields_for :shows do|show| %>
+      <%= render 'show_fields', :f => show %><br>
+<% end %><br>
+<div>
+      <%= link_to_add_association 'add show', f, :shows %>
+</div><br>
   <div class="field">
-    <%= ff.label :date %><br>
-    <%= ff.date_field :date %>
-  </div>
-  <div class="field">
-    <%= ff.label :venue %><br>
-    <%= ff.text_field :venue %>
-  </div></div><% end %>
-  <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class:"btn btn-primary"%>
   </div>
 <% end %>
 

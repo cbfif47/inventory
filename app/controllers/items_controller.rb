@@ -28,7 +28,8 @@ class ItemsController < ApplicationController
   end
     
   def index
-    @items = Item.owned(current_user)
+    @items = Item.owned(current_user).active
+    @inactives = Item.owned(current_user).inactive
   end
 
 
@@ -43,6 +44,6 @@ class ItemsController < ApplicationController
   
     def set_item
       @item = Item.find(params[:id])
-      check_user(@item)
+      check_user(@item.group_id)
     end
 end

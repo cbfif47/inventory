@@ -3,6 +3,7 @@ class Item < ActiveRecord::Base
     has_many :transactions, :dependent => :destroy
     has_many :counts, :dependent => :destroy
     scope :active, -> {where("active = ?", true)}
+    scope :inactive, -> {where("active = ?", false)}
     scope :counted_in, ->(show) {joins(:counts).where(counts:{show_id:show.id, out:false})}
     scope :counted_out, ->(show) {joins(:counts).where(counts:{show_id:show.id, out:true})}
   

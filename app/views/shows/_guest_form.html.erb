@@ -10,23 +10,18 @@
       </ul>
     </div>
   <% end %>
+<%= @show.venue %>
+<%= f.fields_for :guests do|guest| %>
 
-  <div class="field">
-    <%= f.label :date %><br>
-    <%= f.date_select :date %>
-  </div>
-<div class="field">
-    <%= f.label :city %><br>
-    <%= f.text_field :city %>
-  </div>
-  <div class="field">
-    <%= f.label :venue %><br>
-    <%= f.text_field :venue %>
-  </div>
-  <div class="field">
-    <%= f.collection_select :tour_id, @tours, :id, :name %><br>
-  </div>
+<%= render 'guest_fields', :f => guest %>
+
+<% end %>
+
+<div>
+  <%= link_to_add_association 'add guest', f, :guests %>
+</div><br>
   <div class="field">
     <%= f.submit class:"btn btn-primary"%>
   </div>
 <% end %>
+

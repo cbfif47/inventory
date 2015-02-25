@@ -1,19 +1,9 @@
 class CountsController < ApplicationController
   before_action :set_count, only: [:show, :edit, :update, :destroy]
 
-#  def index
-#    @show = Show.find(params[:id])
-#    check_user(@show)
-#    @counts = Count.where(show_id:@show.id, out:false).owned(current_user).includes(:item)
-#    @mostrecentcount = Count.owned(current_user).order(id: :desc).first
-#    @islatest = @mostrecentcount.present? ? @mostrecentcount.show.date <= @show.date : true
-#    @items = Item.owned(current_user).active.pluck(:id) - Item.counted_in(@show).pluck(:id)
-#    @needouts = Item.counted_in(@show).pluck(:id) - Item.counted_out(@show).pluck(:id)
-#  end
-
   def new
-      @show = Show.find(params[:id])
-      check_user(@show)
+      @show = Show.find(params[:show_id])
+    check_user(@show.tour.group_id)
       session[:return_to] = request.referer
       @count = Count.new
       @primary = Location.prime(current_user)
@@ -37,13 +27,13 @@ class CountsController < ApplicationController
     @show = Show.find_by(id: @count.show_id)
     @direction = @count.out? ? "out" : "in"
     @count.destroy
-    redirect_to count_in_out_path(@show, @direction), :notice => 'Count Detroyed'
+    redirect_to new_show_count_path(@show, direction:@direction), :notice => 'Count Destroyed'
   end
 
   private
     def set_count
       @count = Count.find(params[:id])
-      check_user(@count)
+      check_user(@count.show.tour.group_id)
     end
   
     def set_items

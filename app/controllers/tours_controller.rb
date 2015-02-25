@@ -14,7 +14,6 @@ class ToursController < ApplicationController
 
   def new
     @tour = Tour.new
-    @tour.shows.build
   end
 
   def edit
@@ -22,9 +21,6 @@ class ToursController < ApplicationController
 
   def create
     @tour = Tour.new(tour_params)
-    @tour.shows.each do |show|
-      show.group_id = current_user.group_id
-    end
     @tour.save
     redirect_to tour_path(@tour)
   end
@@ -42,10 +38,10 @@ class ToursController < ApplicationController
   private
     def set_tour
       @tour = Tour.find(params[:id])
-      check_user(@tour)
+      check_user(@tour.group_id)
     end
 
     def tour_params
-      params.require(:tour).permit(:name,shows_attributes: [:date,:venue]).merge(group_id: current_user.group_id)
+      params.require(:tour).permit(:name,shows_attributes: [:id,:date,:venue,:city,:_destroy]).merge(group_id: current_user.group_id)
     end
 end

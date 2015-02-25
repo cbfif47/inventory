@@ -5,10 +5,25 @@ class ApplicationController < ActionController::Base
     before_action :authenticate_user!
   
      def check_user(object)
-    unless object.group_id == current_user.group_id
+    unless object == current_user.group_id
       flash[:error] = "Quit sneaking around, this aint yours!"
       redirect_to root_url # halts request cycle
     end
   end 
+  
+    
+  def incoming_date(subject) #try a bunch of different things to see what sticks, cant do %Y cuz it'll do 0015 as year
+    @date = Date.strptime(subject, '%m/%d/%y') rescue nil
+    if !@date
+      @date = Date.strptime(subject, '%m-%d-%y') rescue nil
+    end
+    if !@date
+      @date = Date.strptime(subject, "%m/%d") rescue nil
+    end
+    if !@date
+      @date = Date.strptime(subject, "%m-%d") rescue nil
+    end
+    @date
+  end
   
 end

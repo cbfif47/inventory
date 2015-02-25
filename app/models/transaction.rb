@@ -1,10 +1,9 @@
 class Transaction < ActiveRecord::Base
-  include Ownable
   belongs_to :item
   belongs_to :action
   belongs_to :count
   belongs_to :show
-  
+  scope :owned, ->(user) { joins(:item).where(items:{group_id:user.group_id}) }
   scope :active, -> {where("active = ?", true)}
     
   
@@ -61,15 +60,15 @@ class Transaction < ActiveRecord::Base
         if k['quantity'] != ''
           if k['action_id'] == '4' #adjustment logic
             if k['quantity'].to_i > k['oldquant'].to_i
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['quantity'].to_i-k['oldquant'].to_i), :loc2 => k['loc1'], :group_id => user.group_id, :count_id => count)
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['quantity'].to_i-k['oldquant'].to_i), :loc2 => k['loc1'], :count_id => count)
               @transaction.save
             elsif k['quantity'].to_i < k['oldquant'].to_i
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :group_id => user.group_id, :count_id => count)
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :count_id => count)
               @transaction.save
             else
             end
           else
-              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :loc2 => k['loc2'], :group_id => user.group_id, :count_id => count)
+              @transaction = Transaction.new(:date => k['date'], :item_id => k['item_id'], :action_id => k['action_id'], :quantity => (k['oldquant'].to_i-k['quantity'].to_i), :loc1 => k['loc1'], :loc2 => k['loc2'], :count_id => count)
               @transaction.save
           end
         else

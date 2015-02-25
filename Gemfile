@@ -41,6 +41,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 gem 'devise'
 gem 'possessive'
 gem 'will_paginate-bootstrap'
-gem 'bootstrap-sass', '~> 3.3.3'
+gem 'bootstrap-sass'
 gem 'sass-rails', '>= 3.2'
 gem 'autoprefixer-rails'
+gem 'cocoon'
